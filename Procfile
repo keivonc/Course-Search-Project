@@ -1,2 +1,2 @@
 
-web: gunicorn buildexample.wsgi
+web: gunicorn louslist.wsgi
