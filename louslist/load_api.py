@@ -1,7 +1,11 @@
 import json
-import urllib.request
+from urllib.request import urlopen
 
-webUrl = urllib.request.urlopen('https://luthers-list.herokuapp.com/api/dept/APMA/')
+link = "https://luthers-list.herokuapp.com/api/dept/APMA/"
+
+e = urlopen(link)
+myfile = e.read()
+
 
 
 f = open('JSON/department.json')
@@ -16,6 +20,6 @@ for i in data:
     for value in i.items():
         
         with open(value[1]+".json",'w') as f:
-            f.write(webUrl+value[1]+"/?format=json")
+            f.write(myfile+value[1]+"/?format=json")
        
 
