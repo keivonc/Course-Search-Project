@@ -27,5 +27,5 @@ def load_json_array(json_array):
         load_database_from_json_object(json_object)
 
 def load_database_from_json_object(json_object):
-    cpj = CourseJasonParser(json_object)
+    cpj = CourseJsonParser(json_object)
     cpj.load_all()
