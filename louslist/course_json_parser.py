@@ -59,7 +59,7 @@ class CourseJsonParser:
                                     start_time = meeting.get("start_time"),
                                     end_time = meeting.get("end_time"),
                                     facility_description = meeting.get("facility_description"))
-            meetings.appen (new_meeting)
+            meetings.append(new_meeting)
         
         for meeting in meetings:
             meeting.save()
