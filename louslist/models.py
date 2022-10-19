@@ -15,7 +15,7 @@ class Section(models.Model):
     subject = models.CharField(max_length=4)
     catalog_number = models.CharField(max_length=4)
     description = models.TextField()
-    units = models.IntegerField()
+    units = models.CharField(max_length=20)
     component = models.CharField(max_length=10)
     class_capacity = models.IntegerField()
     wait_list = models.IntegerField()
@@ -29,9 +29,9 @@ class Section(models.Model):
 class Meeting(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     days = models.CharField(max_length=50) 
-    start_time = models.DateTimeField() 
-    end_time = models.DateTimeField()
-    faculty_description = models.CharField(max_length=50)
+    start_time = models.CharField(max_length=50) 
+    end_time = models.CharField(max_length=50)
+    facility_description = models.CharField(max_length=50)
     def __str__(self):
-        return self.section, self.days
+        return self.section + self.days
 

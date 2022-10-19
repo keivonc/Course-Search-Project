@@ -6,7 +6,7 @@ def get_all_json_files():
     json_files = []
     for root, dirs, files in os.walk('JSON'):
         for file in files:
-            if file.endswitch('.json'):
+            if file.endswith('.json'):
                 json_files.append(os.path.join(root, file))
     for each in json_files:
         #print(each)

@@ -37,8 +37,8 @@ class CourseJsonParser:
                             wait_list=self.json_object.get("wait_list"),
                             wait_cap=self.json_object.get("wait_cap"),
                             enrollment_total=self.json_object.get("enrollment_total"),
-                            enrollement_available=self.json_object.get("enrollement_available"),
-                            topic=self.json_object.get("topic"))
+                            enrollment_available=self.json_object.get("enrollment_available"),
+                            topic=self.json_object.get("topic", "N/A"))
         if not Section.objects.filter(course_number = section.course_number).exists():
             section.save()
         
