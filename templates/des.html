@@ -1,9 +1,16 @@
+<!-- Need to add JSON variable "meetings" to model -->
+
 <html>
 <center>
 
     {% for section in sections%}
-    <h1> {{section.instructor.name}}: {{section.meetings.days}} {{section.meetings.start_time}} 
-        {{section.meetings.end_time}} {{section.meetings.facility_description}} </h1>
+        {% if section.instructor.name == "-" %}
+            <h1> To be announced: {{section.meetings.days}} {{section.meetings.start_time}}
+            {{section.meetings.end_time}} {{section.meetings.facility_description}} </h1>
+        {% else %}
+            <h1> {{section.instructor.name}}: {{section.meetings.days}} {{section.meetings.start_time}}
+            {{section.meetings.end_time}} {{section.meetings.facility_description}} </h1>
+        {% endif %}
     {%endfor%}
 
 </center>
