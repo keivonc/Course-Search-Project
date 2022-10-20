@@ -26,8 +26,7 @@ def find_all_by_dept_v2(request, dept):
     return render(request, 'findallbydept.html', {'sections': sections, "department": dept})
 
 def info(request, dept, desc):
-    print(request, dept, desc)
-    # filename = 'JSON/' + dept + '.json'
-    # load_json_file(filename)
-    section = Section.objects.filter(description = desc)
-    return render (request, 'des.html', {'section': section, "department": dept, "description": desc})
+    filename = "JSON/" + dept + ".json"
+    load_json_file(filename)
+    sections = Section.objects.filter(description=desc)
+    return render(request, 'des.html', {'sections': sections, "department": dept, "description": desc})

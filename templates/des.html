@@ -1,12 +1,11 @@
 <html>
+<center>
 
+    {% for section in sections%}
+    <h1> {{section.instructor.name}}: {{section.meetings.days}} {{section.meetings.start_time}} 
+        {{section.meetings.end_time}} {{section.meetings.facility_description}} </h1>
+    {%endfor%}
 
-<!-- {% for section in sections%} -->
-<h4> {{section.instructor}}</h4>
-<!-- {%endfor%} -->
-
+</center>
 
 </html>
-
-
-<html>

@@ -1,23 +1,18 @@
-
 <html>
 <center>
 
-<body>
-<h1>We are in the {{department}} department </h1>
-   
+    <body>
+        <h1>We are in the {{department}} department </h1>
+        <p>
+            {% for section in sections%}
+            <br>
+            <a href="{{department}}/{{section.description}}/info">
+                <h4> {{section.subject}} {{section.catalog_number}}: {{section.description}} </h4>
+            </a>
+            {%endfor%}
+        </p>
 
-    <p>
-        {% for section in sections%}
-        
-
-
-        <br>
-        <a href="{{department}}/{{section.description}}/info">
-        <h4 > 
-            {{section.description}} </h4></a>
-        {%endfor%}
-    </p>
-
-</body>
+    </body>
 </center>
+
 </html>
