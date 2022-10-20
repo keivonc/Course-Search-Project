@@ -19,11 +19,14 @@ from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
 
 from .views import find_all_by_dept_v2
+from .views import info
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name="index.html")),
     path('accounts/', include('allauth.urls')),
     path('logout/', LogoutView.as_view()),
-    path('departments/<str:dept>', find_all_by_dept_v2)
+    path('departments/<str:dept>', find_all_by_dept_v2),
+    path('departments/<str:dept>/<str:desc>/info', info )
+    
 ]
