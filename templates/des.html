@@ -5,12 +5,12 @@
 
     {% for section in sections%}
         {% if section.instructor.name == "-" %}
-            <h1> To be announced: {{section.meetings.days}} {{section.meetings.start_time}}
-            {{section.meetings.end_time}} {{section.meetings.facility_description}} </h1>
+            <h1> To be announced </h1>            
         {% else %}
-            <h1> {{section.instructor.name}}: {{section.meetings.days}} {{section.meetings.start_time}}
-            {{section.meetings.end_time}} {{section.meetings.facility_description}} </h1>
+            <h1> {{section.instructor.name}} </h1>
         {% endif %}
+        Course Number: {{section.course_number}} | {{section.component}} ({{section.units}} units) | 
+        {{section.enrollment_total}}/{{section.class_capacity}} ({{section.enrollment_available}} seats available)
     {%endfor%}
 
 </center>
