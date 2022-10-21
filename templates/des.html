@@ -1,18 +1,20 @@
-<!-- Need to add JSON variable "meetings" to model -->
+<!-- Need to reformat start and end times -->
 
 <html>
-<center>
-
-    {% for section in sections%}
+    {% for section in sections %}
         {% if section.instructor.name == "-" %}
-            <h1> To be announced </h1>            
+            <h2> To be announced </h2>            
         {% else %}
-            <h1> {{section.instructor.name}} </h1>
+            <h3> {{section.instructor.name}} </h3>
         {% endif %}
-        Course Number: {{section.course_number}} | {{section.component}} ({{section.units}} units) | 
+        Course Number: {{section.course_number}} | {{section.course_section}} | {{section.component}} ({{section.units}} units) | 
         {{section.enrollment_total}}/{{section.class_capacity}} ({{section.enrollment_available}} seats available)
-    {%endfor%}
-
-</center>
-
+        <br/>
+        {% for meeting in meetings %} 
+            {% if meeting.section == section %} 
+                {{meeting.days}} | {{meeting.start_time}} | {{meeting.end_time}} | {{meeting.facility_description}}
+                <br/>
+            {% endif %} 
+        {% endfor %}
+    {% endfor %}
 </html>
