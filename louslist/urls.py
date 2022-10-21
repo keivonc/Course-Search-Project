@@ -27,6 +27,6 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('logout/', LogoutView.as_view()),
     path('departments/<str:dept>', find_all_by_dept_v2),
-    path('departments/<str:dept>/<str:desc>/info', info )
+    path('departments/<str:dept>/<str:cn>/<str:desc>/info', info )
     
 ]

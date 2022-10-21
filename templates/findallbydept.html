@@ -3,7 +3,7 @@
         <h1> {{department}} courses </h1>
         <p>
             {% for section in sections %}
-            <a href="{{department}}/{{section.description}}/info">
+            <a href="{{department}}/{{section.catalog_number}}/{{section.description}}/info">
                 <h4> {{section.subject}} {{section.catalog_number}}: {{section.description}} </h4>
             </a>
             {%endfor%}

@@ -26,11 +26,9 @@ def find_all_by_dept_v2(request, dept):
     sections = sections.order_by('catalog_number')
     return render(request, 'findallbydept.html', {'sections': sections, "department": dept})
 
-def info(request, dept, desc):
+def info(request, dept, desc, cn):
     filename = "JSON/" + dept + ".json"
     load_json_file(filename)
-    sections = Section.objects.filter(description=desc)
+    sections = Section.objects.filter(description=desc, catalog_number=cn)
     meetings = Meeting.objects.all()
-    return render(request, 'des.html', {'sections': sections, 'meetings': meetings, "department": dept, "description": desc})
-
-# order by catalog number not description
+    return render(request, 'des.html', {'sections': sections, 'meetings': meetings, "department": dept, "description": desc, 'catalog_number': cn})
