@@ -1,5 +1,5 @@
 asgiref==3.5.2
-backports.zoneinfo==0.2.1
+# backports.zoneinfo==0.2.1
 certifi==2022.9.24
 cffi==1.15.1
 charset-normalizer==2.1.1
@@ -24,4 +24,4 @@ types-cryptography==3.3.23
 tzdata==2022.2
 urllib3==1.26.12
 whitenoise==6.2.0
-windows-curses==2.3.0
+# windows-curses==2.3.0
