@@ -1,4 +1,7 @@
 from django.db import models
+from django.utils import timezone
+from tinymce.models import HTMLField
+from django.contrib.auth import get_user_model
 
 class Instructor(models.Model):
     name = models.CharField(max_length=50)

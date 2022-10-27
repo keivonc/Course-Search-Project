@@ -28,5 +28,9 @@ urlpatterns = [
     path('logout/', LogoutView.as_view()),
     path('departments/<str:dept>', find_all_by_dept_v2, name='dept_page'),
     path('departments/<str:dept>/<str:cn>/<str:desc>/info', info, name='course_page')
+    path("register", views.register, name="register"),
+    path('login', views.custom_login, name='login'),
+    path('logout', views.custom_logout, name='logout'),
+    path('profile/<username>', views.profile, name='profile'),
     
 ]
