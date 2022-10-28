@@ -18,19 +18,18 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
 
-from .views import find_all_by_dept_v2
-from .views import info
+# from .views import find_all_by_dept_v2, info, register, custom_login, custom_logout, profile
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name="index.html"), name='homepage'),
     path('accounts/', include('allauth.urls')),
     path('logout/', LogoutView.as_view()),
-    path('departments/<str:dept>', find_all_by_dept_v2, name='dept_page'),
-    path('departments/<str:dept>/<str:cn>/<str:desc>/info', info, name='course_page')
-    path("register", views.register, name="register"),
-    path('login', views.custom_login, name='login'),
-    path('logout', views.custom_logout, name='logout'),
+    path('departments/<str:dept>', views.find_all_by_dept_v2, name='dept_page'),
+    path('departments/<str:dept>/<str:cn>/<str:desc>/info', views.info, name='course_page'),
+    # path("register", views.register, name="register"),
+    # path('login', views.custom_login, name='login'),
+    # path('logout', views.custom_logout, name='logout'),
     path('profile/<username>', views.profile, name='profile'),
-    
 ]
