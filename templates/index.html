@@ -1,96 +1,12 @@
+<!-- Need to connect enter key to search bar -->
+<!-- Need to make search bar case insensitive -->
+
+{% extends 'base.html' %}
 {% load socialaccount %}
-<!DOCTYPE html>
+{% block content %}
+
 <html>
-{% if user.is_authenticated %}
-<!-- <p>You are logged in as {{ user.username }}</p> -->
-<!-- <br /> -->
-
-<!-- header -->
-<!-- https://www.w3schools.com/howto/howto_css_responsive_header.asp -->
-<head>
-    <title>New Lou's List</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .header {
-            overflow: hidden;
-            background-color: #f1f1f1;
-            padding: 20px 10px;
-        }
-
-        .header a {
-            float: left;
-            color: black;
-            text-align: center;
-            padding: 12px;
-            text-decoration: none;
-            font-size: 18px;
-            line-height: 25px;
-            border-radius: 4px;
-        }
-
-        .header a.logo {
-            font-size: 25px;
-            font-weight: bold;
-        }
-
-        .header a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        .header a.active {
-            background-color: dodgerblue;
-            color: white;
-        }
-
-        .header-right {
-            float: right;
-        }
-
-        @media screen and (max-width: 500px) {
-            .header a {
-                float: none;
-                display: block;
-                text-align: left;
-            }
-
-            .header-right {
-                float: none;
-            }
-        }
-    </style>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" rel="stylesheet">
-</head>
-
-<body bgcolor="grey">
-    <h1>New Lou's List</h1>
-
-    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-        <div class="container-fluid">
-            <ul class="navbar-nav">
-                <!-- <h1>You are logged in as {{ user.username }}</h1> -->
-                <li class="nav-item">
-                    <a class="nav-link active" href="#home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#Search Page">Search Page</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#Departments">Departments</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <center>
+<center>
     <br>
     <div style="padding-left:20px">
         <!-- Search bar begin -->
@@ -104,85 +20,17 @@
             <form role="search" method="get" id="search">
                 <div>
                     <p> <strong> Enter a department: </strong> </p>
-                    <input type="text" value="" name="tag_search" id="tag_search"/>
+                    <input type="text" value="" name="tag_search" id="tag_search" />
                     <input type="button" value="Search" onclick="goToSearch()" />
                 </div>
             </form>
         </div>
         <!-- Search bar end -->
     </div>
-    </center>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</body>
-
-<center>
-<br>
-<a href="logout/" class="btn btn-primary"> Log out </a>
-{% else %}
-<h1> Google Login </h1>
-<br>
-<a href="{% provider_login_url 'google' %}">Login With Google</a>
-{% endif %}
 </center>
-
-<style>
-    .footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: rgba(27, 26, 26, 0.223);
-        color: white;
-        text-align: center;
-    }
-
-    .dropbtn {
-        background-color: #04AA6D;
-        color: white;
-        padding: 16px;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-    }
-
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
-
-    .dropdown-content {
-        display: none;
-        position: relative;
-        right: 0;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
-
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
-
-    .dropdown-content a:hover {
-        background-color: #f1f1f1;
-    }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    .dropdown:hover .dropbtn {
-        background-color: #3e8e41;
-    }
-</style>
-
-<div class="footer">
-    <p>Created by Group A-29</p>
-</div>
-</body>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 </html>
+
+{% endblock content %}
