@@ -1,17 +1,7 @@
 {% load socialaccount %}
 
 <!DOCTYPE html>
-<div class="p-3 mb-3 bg-dark">
-    <div class="container d-flex justify-content-between">
-        {% if user.is_authenticated %}
-        <div><a class="text-light" href="{% url 'login' %}">Home</a></div>
-        <div><a class="text-light" href="{% url 'login' %}">Sign Out</a></div>
-        {% else %}
-        <div><a class="text-light" href="{% url 'login' %}">Sign In</a></div>
-        <div><a class="text-light" href="{% url 'login' %}">Sign Up</a></div>
-        {% endif %}
-    </div>
-  </div>
+
 <head>
     <title>New Lou's List</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -79,48 +69,16 @@
 </head>
 
 <body bgcolor="grey">
-    {% if user.is_authenticated %}
-    <h1>New Lou's List</h1>
-    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-        <div class="container-fluid">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" href="/search/">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Profile
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/profile/">Update Information</a></li>
-                        <li><a class="dropdown-item" href="#">Add friends</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="logout/">Logout</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#Departments">Departments</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    {% endif %}
-    {% block content %}
-
-    {% endblock content %}
     <style>
         .footer {
             position: fixed;
             left: 0;
             bottom: 0;
             width: 100%;
-            background-color: rgba(27, 26, 26, 0.223);
+            background-color:black;
             color: white;
             text-align: center;
-            height: 4em;
+            height: 2em;
         }
 
         .dropbtn {
@@ -166,11 +124,22 @@
             background-color: #3e8e41;
         }
     </style>
-    {% if user.is_authenticated %}
-    <br>
+  <div class="p-3 mb-3 bg-dark">
+    <div class="container d-flex justify-content-between">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link active" href="/search/">Home</a>
+        </li>
+        <li class = "nav-item"><a class = "nav-link active" href="/profile/">Profile</a></li>
+        <li class = "nav-item"><a class = "nav-link active" href="/profile/">Add Friends</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#Departments">Departments</a>
+            <li class="nav-item"><a class="nav-link active" href="{% url 'logout' %}">Logout</a>
+        </li>
+        <br>
     <div class="footer">
         <p>Created by Group A-29</p>
     </div>
-    {% endif %}
-
+        {% endif %}
+    </div>
+  </div>
 </body>
