@@ -4,8 +4,8 @@
 <div class="p-3 mb-3 bg-dark">
     <div class="container d-flex justify-content-between">
         {% if user.is_authenticated %}
-        <div><a class="text-light" href="{% url 'index' %}">Home</a></div>
-        <div><a class="text-light" href="{% url 'logout' %}">Sign Out</a></div>
+        <div><a class="text-light" href="{% url 'login' %}">Home</a></div>
+        <div><a class="text-light" href="{% url 'login' %}">Sign Out</a></div>
         {% else %}
         <div><a class="text-light" href="{% url 'login' %}">Sign In</a></div>
         <div><a class="text-light" href="{% url 'login' %}">Sign Up</a></div>
