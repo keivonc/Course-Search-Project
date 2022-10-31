@@ -22,14 +22,15 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name="index.html"), name='users-home'),
+    path('', TemplateView.as_view(template_name="home.html"), name='home'),
+    path('search/', TemplateView.as_view(template_name="search_page.html"), name='users-home'),
     path('departments/<str:dept>', views.find_all_by_dept_v2, name='dept_page'),
     path('departments/<str:dept>/<str:cn>/<str:desc>/info', views.info, name='course_page'),
     path('register/', views.RegisterView.as_view(), name='users-register'),
     path('profile/', views.profile, name='users-profile'),
     path('login/', views.CustomLoginView.as_view(redirect_authenticated_user=True, template_name='login.html',
                                            authentication_form=views.LoginForm), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name='logout'),
+    path('search/logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name='logout'),
     path('password-change/', views.ChangePasswordView.as_view(), name='password_change'),
     re_path(r'^oauth/', include('social_django.urls', namespace='social')),
 ]
