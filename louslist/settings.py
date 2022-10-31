@@ -39,12 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'louslist',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'crispy_forms',
+    'social_django',
+    'louslist.apps.LouslistConfig',
 ]
 
 MIDDLEWARE = [
@@ -156,6 +157,7 @@ except ImportError:
     found = False
 
 AUTHENTICATION_BACKENDS = [
+    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
 ]
@@ -172,7 +174,13 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '542887136511-taa1crl0k69eq5rmphtlb21ihn7ud9p7.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
 SITE_ID = 2
 
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
