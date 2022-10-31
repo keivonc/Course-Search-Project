@@ -1,0 +1,11 @@
+footer overlaps buttons on profile page
+profile dropdown on navbar only works on some pages
+success messages do not show (i.e. should say 'Account created for {username}' after user registers)
+search bar needs to be linked to enter key
+need to fix time format for class descriptions
+need to add other fields to Profile model (major, year)
+Error 400: redirect_uri_mismatch with Google login 
+
+need to implement friending
+need to implement schedule building
+need to add tests
