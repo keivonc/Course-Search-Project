@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'widget_tweaks'
+    'widget_tweaks',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
