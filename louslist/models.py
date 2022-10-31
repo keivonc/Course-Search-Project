@@ -9,7 +9,7 @@ class Instructor(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField()
     def __str__(self):
-        return str(self.name) + str(self.email)
+        return str(self.name)
 
 
 class Section(models.Model):
@@ -38,7 +38,7 @@ class Meeting(models.Model):
     end_time = models.CharField(max_length=50)
     facility_description = models.CharField(max_length=50)
     def __str__(self):
-        return self.section + self.days
+        return str(self.days)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

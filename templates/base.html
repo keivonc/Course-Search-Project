@@ -79,13 +79,13 @@
 </head>
 
 <body bgcolor="grey">
-    <h1>New Lou's List</h1>
     {% if user.is_authenticated %}
+    <h1>New Lou's List</h1>
     <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
         <div class="container-fluid">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/">Home</a>
+                    <a class="nav-link active" href="/search/">Home</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -120,6 +120,7 @@
             background-color: rgba(27, 26, 26, 0.223);
             color: white;
             text-align: center;
+            height: 4em;
         }
 
         .dropbtn {
@@ -166,6 +167,7 @@
         }
     </style>
     {% if user.is_authenticated %}
+    <br>
     <div class="footer">
         <p>Created by Group A-29</p>
     </div>

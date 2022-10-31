@@ -55,7 +55,7 @@ class RegisterView(View):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect(to='/')
+            return redirect(to='/search')
         return super(RegisterView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
@@ -67,7 +67,6 @@ class RegisterView(View):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            # does not print currently
             messages.success(request, f'Account created for {username}')
             return redirect(to='login')
         return render(request, self.template_name, {'form': form})
