@@ -11,6 +11,7 @@ from django.urls import reverse_lazy
 from .api_loader import *
 from .models import Section, Meeting
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
+import os
 
 @login_required
 def load_api(request):
@@ -24,6 +25,12 @@ def load_api_by_dept(request, dept):
     return HttpResponse("I just read a whole lot of JSON files")
 
 @login_required
+def get_departments(request):
+    sections = Section.objects.all().values('subject').distinct()
+    sections = sections.order_by('subject')
+    return render(request, 'departments.html', {'sections': sections})
+
+@login_required
 def find_all_by_dept(request, dept):
     sections = Section.objects.filter(subject=dept)
     sections_serialized = serializers.serialize('json', sections)
@@ -31,16 +38,18 @@ def find_all_by_dept(request, dept):
 
 @login_required
 def find_all_by_dept_v2(request, dept):
-    filename = "JSON/" + dept + ".json"
-    load_json_file(filename)
+    # filename = "JSON/" + dept + ".json"
+    # load_json_file(filename)
+    # for f in os.listdir('JSON'):
+    #     load_json_file('JSON/' + f)
     sections = Section.objects.filter(subject=dept).distinct('description', 'catalog_number')
     sections = sections.order_by('catalog_number')
     return render(request, 'findallbydept.html', {'sections': sections, "department": dept})
 
 @login_required
 def info(request, dept, desc, cn):
-    filename = "JSON/" + dept + ".json"
-    load_json_file(filename)
+    # filename = "JSON/" + dept + ".json"
+    # load_json_file(filename)
     sections = Section.objects.filter(description=desc, catalog_number=cn)
     meetings = Meeting.objects.all()
     return render(request, 'des.html', {'sections': sections, 'meetings': meetings, "department": dept, "description": desc, 'catalog_number': cn})
