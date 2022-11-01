@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 from PIL import Image
 
 class Instructor(models.Model):
@@ -40,12 +41,13 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
-    # major = models.CharField(max_length=50)
-    # year = models.CharField(max_length=10)
+    major = models.CharField(max_length=50)
+    year = models.CharField(max_length=10)
     bio = models.TextField()
+    schedule = ArrayField(models.CharField(max_length=500), blank=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user.username, self.major, self.year
 
     def save(self, *args, **kwargs):
         super().save()
