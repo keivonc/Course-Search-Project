@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+{{department}}
+<ul class="list-group list-group-light list-group-small">
+    {% for section in sections %}
+    <li class="list-group-item"> {{section.subject}}</li>
+    {%endfor%}
+</ul>
+{% endblock content %}

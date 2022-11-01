@@ -1,11 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
+from PIL import Image
 
 class Instructor(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField()
     def __str__(self):
-        return str(self.name) + str(self.email)
-
+        return str(self.name)
 
 class Section(models.Model):
     instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)
@@ -24,7 +25,7 @@ class Section(models.Model):
     enrollment_available = models.IntegerField()
     topic = models.CharField(max_length=50)
     def __str__(self):
-        return self.course_number
+        return self.course_number, self.subject
 
 class Meeting(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
@@ -33,5 +34,26 @@ class Meeting(models.Model):
     end_time = models.CharField(max_length=50)
     facility_description = models.CharField(max_length=50)
     def __str__(self):
-        return self.section + self.days
+        return str(self.days)
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
+    # major = models.CharField(max_length=50)
+    # year = models.CharField(max_length=10)
+    bio = models.TextField()
+
+    def __str__(self):
+        return self.user.username
+
+    def save(self, *args, **kwargs):
+        super().save()
+
+        img = Image.open(self.avatar.path)
+
+        if img.height > 100 or img.width > 100:
+            new_img = (100, 100)
+            img.thumbnail(new_img)
+            img.save(self.avatar.path)
 
