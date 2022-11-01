@@ -60,13 +60,29 @@ body{
         rel="stylesheet">
 </head>
 
+{% if user.is_authenticated %}
 <body>
     <header id="showcase">
         <h1>Welcome to The New Lou's List</h1>
         <p>UVA's best class searcher</p>
+        <p>You are currently logged in as {{user.username}}</p>
+        <div id="container"> 
+            <a href="/search" class="button">Search</a>
+            <a href="/logout" class="button">Sign Out</a>
+        </div>
+      </header>
+</body>
+{%else%}
+<body>
+    <header id="showcase">
+        <h1>Welcome to The New Lou's List</h1>
+        <p>{UVA's best class searcher}</p>
         <div id="container"> 
             <a href="/login" class="button">Sign In</a>
             <a href="/register" class="button">Sign Up</a>
         </div>
       </header>
 </body>
+{%endif%}
+
+
