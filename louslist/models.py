@@ -1,7 +1,4 @@
 from django.db import models
-from django.utils import timezone
-from tinymce.models import HTMLField
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from PIL import Image
 
@@ -10,7 +7,6 @@ class Instructor(models.Model):
     email = models.EmailField()
     def __str__(self):
         return str(self.name)
-
 
 class Section(models.Model):
     instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)
