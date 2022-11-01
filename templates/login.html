@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %} Login Page {% endblock title%}
+{% load crispy_forms_filters %}
 {% block content %}
 <div class="form-content my-3 p-3">
     <div class="container">
@@ -21,7 +22,7 @@
                         </button>
                     </div>
                     {% endif %}
-                    <div class="card-body">
+                    <div class="text-center">
                         <form method="POST">
                             {% csrf_token %}
                             <div class="form-row">
@@ -32,7 +33,7 @@
                                         <hr>
                                         <p class="text-center"><strong>OR</strong></p>
                                         <hr>
-                                        <label class="small mb-1">Username</label>
+                                        <label class="small mb-1" >Username</label>
                                         {{ form.username }}
                                     </div>
                                 </div>
