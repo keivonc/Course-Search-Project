@@ -33,6 +33,16 @@ body{
   font-size:50px;
   line-height:1.2;
 }
+.footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color:black;
+            color: white;
+            text-align: center;
+            height: 2em;
+        }
 
 #showcase p{
   font-size:20px;
@@ -59,7 +69,6 @@ body{
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"
         rel="stylesheet">
 </head>
-
 {% if user.is_authenticated %}
 <body>
     <header id="showcase">
@@ -68,20 +77,28 @@ body{
         <p>You are currently logged in as {{user.username}}</p>
         <div id="container"> 
             <a href="/search" class="button">Search</a>
-            <a href="/logout" class="button">Sign Out</a>
+            <a href="/search/logout" class="button">Sign Out</a>
         </div>
       </header>
+      <br>
+      <div class="footer">
+        <p>Created by Group A-29</p>
+    </div>
 </body>
 {%else%}
 <body>
     <header id="showcase">
         <h1>Welcome to The New Lou's List</h1>
-        <p>{UVA's best class searcher}</p>
+        <p>UVA's best class searcher</p>
         <div id="container"> 
             <a href="/login" class="button">Sign In</a>
             <a href="/register" class="button">Sign Up</a>
         </div>
       </header>
+      <br>
+      <div class="footer">
+        <p>Created by Group A-29</p>
+    </div>
 </body>
 {%endif%}
 
