@@ -15,7 +15,7 @@
                     <p> <strong> Enter a department: </strong> </p>
                     <input type="text" value="" name="tag_search" id="tag_search" />
                     <input type="button" value="Search" id="search_button"
-                        onclick="window.location.href='/departments/' + encodeURI(document.getElementById('tag_search').value)" />
+                        onclick="window.location.href='/departments/' + encodeURI(document.getElementById('tag_search').value.toUpperCase())" />
                     <script>
                         document.getElementById('tag_search').addEventListener("keypress", function (event) {
                             // If the user presses the "Enter" key on the keyboard
