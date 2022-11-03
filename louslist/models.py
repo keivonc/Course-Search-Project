@@ -35,7 +35,7 @@ class Meeting(models.Model):
     end_time = models.CharField(max_length=50)
     facility_description = models.CharField(max_length=50)
     def __str__(self):
-        return str(self.facility_description)
+        return str(self.end_time)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

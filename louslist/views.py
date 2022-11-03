@@ -42,6 +42,22 @@ def find_all_by_dept_v2(request, dept):
     # load_json_file(filename)
     # for f in os.listdir('JSON'):
     #     load_json_file('JSON/' + f)
+    # for query in Meeting.objects.all():
+    #     if query.start_time:
+    #         if int(query.start_time[0:2]) > 12:
+    #             query.start_time = str(int(query.start_time[0:2]) - 12) + ":" + query.start_time[3:5] + " PM"
+    #             query.save()
+    #         else: 
+    #             query.start_time = str(int(query.start_time[0:2])) + ":" + query.start_time[3:5] + " AM"
+    #             query.save()
+     # for query in Meeting.objects.all():
+    #     if query.end_time:
+    #         if int(query.end_time[0:2]) > 12:
+    #             query.end_time = str(int(query.end_time[0:2]) - 12) + ":" + query.end_time[3:5] + " PM"
+    #             query.save()
+    #         else: 
+    #             query.end_time = str(int(query.end_time[0:2])) + ":" + query.end_time[3:5] + " AM"
+    #             query.save()
     sections = Section.objects.filter(subject=dept).distinct('description', 'catalog_number')
     sections = sections.order_by('catalog_number')
     return render(request, 'findallbydept.html', {'sections': sections, "department": dept})
