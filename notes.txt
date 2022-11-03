@@ -1,7 +1,6 @@
-department mnemonic search needs to be case insensitive - Keivon
-search bar needs to be linked to enter key - ?
-need to fix time format for class descriptions - Keivon
-need to add tests - Keivon
+department mnemonic search needs to be case insensitive
+search bar needs to be linked to enter key
 
 need to implement ability to save courses
 need to implement ability to look at other users saved schedules
+need to add tests
