@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 from .api_loader import *
 from .models import Section, Meeting
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
-import os
+# import os
 
 @login_required
 def load_api(request):
@@ -50,9 +50,12 @@ def find_all_by_dept_v2(request, dept):
 def info(request, dept, desc, cn):
     # filename = "JSON/" + dept + ".json"
     # load_json_file(filename)
-    sections = Section.objects.filter(description=desc, catalog_number=cn)
-    meetings = Meeting.objects.all()
-    return render(request, 'des.html', {'sections': sections, 'meetings': meetings, "department": dept, "description": desc, 'catalog_number': cn})
+    # sections = Section.objects.filter(description=desc, catalog_number=cn)
+    # meetings = Meeting.objects.all()
+    # return render(request, 'des.html', {'sections': sections, 'meetings': meetings, "department": dept, "description": desc, 'catalog_number': cn})
+    meetings = Meeting.objects.filter(section__description=desc, section__catalog_number=cn)
+    return render(request, 'des.html', {'meetings': meetings, "department": dept, "description": desc, 'catalog_number': cn})
+
 
 def login(request):
     return render(request, 'login.html')
