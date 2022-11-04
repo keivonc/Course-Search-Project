@@ -59,7 +59,7 @@ def find_all_by_dept_v2(request, dept):
     #         else: 
     #             query.end_time = str(int(query.end_time[0:2])) + ":" + query.end_time[3:5] + " AM"
     #             query.save()
-    sections = Section.objects.filter(subject=dept).values('description', 'catalog_number').distinct()
+    sections = Section.objects.filter(subject=dept).distinct('description', 'catalog_number')
     sections = sections.order_by('catalog_number')
     if request.POST.get('add_to_saved'):
         profile = get_object_or_404(Profile, user=request.user)
@@ -84,10 +84,10 @@ def login(request):
 def get_saved_courses(request):
     saved_courses = Profile.objects.filter(user__username=request.user.username).values('saved_courses')
     saved_courses1 = saved_courses[0]['saved_courses']
-    # sections = []
+    sections = Section.objects.none()
     for section in saved_courses1:
         section1 = section.split(",")
-        sections = Section.objects.filter(subject=section1[0]).values('description', 'catalog_number').distinct()
+        sections |= Section.objects.filter(subject=section1[0], catalog_number=section1[1][1:], description=section1[2][1:-1]).distinct('catalog_number', 'description')
     sections = sections.order_by('catalog_number')
     return render(request, 'saved_courses.html', {'sections': sections})
 
