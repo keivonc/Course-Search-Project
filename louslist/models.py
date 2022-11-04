@@ -42,10 +42,10 @@ class Profile(models.Model):
     major = models.CharField(max_length=50)
     year = models.CharField(max_length=10)
     bio = models.TextField()
-    # schedule = ArrayField(models.CharField(max_length=500), blank=True)
+    saved_courses = models.JSONField(null=True)
 
     def __str__(self):
-        return self.user.username, self.major, self.year
+        return self.user.username + ", " + self.major + ", " + self.year
 
     # def save(self, *args, **kwargs):
     #     super().save()
