@@ -23,7 +23,7 @@
             <form method="POST">
                 {% csrf_token %}
                 <!-- <input hidden type="submit" class="btn" name="info" value="test"/> -->
-                <input type="submit" class="btn" name="add_to_saved" value="{{section.subject}} {{section.catalog_number}}: {{section.description}}"/>
+                <input type="submit" class="btn" name="add_to_saved" value="{{department}}, {{section.catalog_number}}, {{section.description}} "/>
             </form>
             {%endfor%}
         </ul>
