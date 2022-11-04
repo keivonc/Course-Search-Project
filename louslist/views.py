@@ -80,10 +80,16 @@ def info(request, dept, desc, cn):
 def login(request):
     return render(request, 'login.html')
 
+@login_required
 def get_saved_courses(request):
     saved_courses = Profile.objects.filter(user__username=request.user.username).values('saved_courses')
     saved_courses1 = saved_courses[0]['saved_courses']
-    return render(request, 'saved_courses.html', {'saved_courses': saved_courses1})
+    # sections = []
+    for section in saved_courses1:
+        section1 = section.split(",")
+        sections = Section.objects.filter(subject=section1[0]).values('description', 'catalog_number').distinct()
+    sections = sections.order_by('catalog_number')
+    return render(request, 'saved_courses.html', {'sections': sections})
 
 class RegisterView(View):
     form_class = RegisterForm
