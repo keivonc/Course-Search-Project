@@ -9,13 +9,26 @@
         <ul class="list-group list-group-light list-group-small" id="courses">
             {% for section in sections %}
             <a href="{{department}}/{{section.catalog_number}}/{{section.description}}/info">
-                <li class="list-group-item"> {{section.subject}} {{section.catalog_number}}: {{section.description}}
+                <li class="list-group-item" name="course"> {{section.subject}} {{section.catalog_number}}: {{section.description}}
                 </li>
             </a>
+            <!-- <form method="GET">
+                {% csrf_token %}
+                <a name="course" href="{{department}}/{{section.catalog_number}}/{{section.description}}/info">
+                    <li class="list-group-item"></li> {{section.subject}} {{section.catalog_number}}:
+                        {{section.description}}
+                    </li>
+                </a>
+            </form> -->
+            <form method="POST">
+                {% csrf_token %}
+                <!-- <input hidden type="submit" class="btn" name="info" value="test"/> -->
+                <input type="submit" class="btn" name="add_to_saved" value="{{section.subject}} {{section.catalog_number}}: {{section.description}}"/>
+            </form>
             {%endfor%}
         </ul>
         {% if not sections %}
-    </br>
+        </br>
         <center>There are no courses associated with {{department}}. Please enter a valid department mnemonic.</center>
         {% endif %}
     </div>

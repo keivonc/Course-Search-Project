@@ -4,12 +4,13 @@ from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core import serializers
 from django.urls import reverse_lazy
+from django.db.models import F
 
 from .api_loader import *
-from .models import Section, Meeting
+from .models import Section, Meeting, Profile
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
 # import os
 
@@ -58,8 +59,12 @@ def find_all_by_dept_v2(request, dept):
     #         else: 
     #             query.end_time = str(int(query.end_time[0:2])) + ":" + query.end_time[3:5] + " AM"
     #             query.save()
-    sections = Section.objects.filter(subject=dept).distinct('description', 'catalog_number')
+    sections = Section.objects.filter(subject=dept).values('description', 'catalog_number').distinct()
     sections = sections.order_by('catalog_number')
+    if request.POST.get('add_to_saved'):
+        profile = get_object_or_404(Profile, user=request.user)
+        profile.saved_courses += [request.POST.get('add_to_saved')]
+        profile.save(update_fields=["saved_courses"])
     return render(request, 'findallbydept.html', {'sections': sections, "department": dept})
 
 @login_required
@@ -72,9 +77,13 @@ def info(request, dept, desc, cn):
     meetings = Meeting.objects.filter(section__description=desc, section__catalog_number=cn)
     return render(request, 'des.html', {'meetings': meetings, "department": dept, "description": desc, 'catalog_number': cn})
 
-
 def login(request):
     return render(request, 'login.html')
+
+def get_saved_courses(request):
+    saved_courses = Profile.objects.filter(user__username=request.user.username).values('saved_courses')
+    saved_courses1 = saved_courses[0]['saved_courses']
+    return render(request, 'saved_courses.html', {'saved_courses': saved_courses1})
 
 class RegisterView(View):
     form_class = RegisterForm

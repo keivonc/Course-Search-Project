@@ -42,18 +42,7 @@ class Profile(models.Model):
     major = models.CharField(max_length=50)
     year = models.CharField(max_length=10)
     bio = models.TextField()
-    saved_courses = models.JSONField(null=True)
+    saved_courses = models.JSONField(default=list)
 
     def __str__(self):
-        return self.user.username + ", " + self.major + ", " + self.year
-
-    # def save(self, *args, **kwargs):
-    #     super().save()
-
-    #     img = Image.open(self.avatar.path)
-
-    #     if img.height > 100 or img.width > 100:
-    #         new_img = (100, 100)
-    #         img.thumbnail(new_img)
-    #         img.save(self.avatar.path)
-
+        return self.user.username + ", " + self.major + ", " + self.year + ", " + str(self.saved_courses)

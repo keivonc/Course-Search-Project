@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Saved Courses{% endblock title %}
+{% block content %}
+    {% for course in saved_courses %}
+    <ul>
+        <li>{{course}}</li>
+    </ul>
+    {% endfor %}
+{% endblock content %}
