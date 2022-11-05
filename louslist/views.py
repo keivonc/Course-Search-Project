@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
+from django.views.generic import TemplateView, ListView
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core import serializers
@@ -10,7 +11,7 @@ from django.urls import reverse_lazy
 from django.db.models import F
 
 from .api_loader import *
-from .models import Section, Meeting, Profile
+from .models import Section, Meeting, Profile, User
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
 # import os
 
@@ -144,3 +145,11 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     template_name = 'change_password.html'
     success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('users-home')
+
+class SearchUsersHomeView(TemplateView):
+    template_name = 'search_users_page.html'
+
+class SearchUsersResultsView(ListView):
+    model=User
+    template_name= 'search_users_results.html'
+    queryset = User.objects.filter(username__icontains="mld2eg")
