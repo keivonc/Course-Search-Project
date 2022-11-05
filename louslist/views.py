@@ -155,10 +155,15 @@ class SearchUsersResultsView(ListView):
     model=Profile
     template_name= 'search_users_results.html'
 
+    def get_context_data(self,**kwargs):
+        context = super(SearchUsersResultsView,self).get_context_data(**kwargs)
+        context['search_query'] = self.request.GET.get("q")
+        return context
+
     def get_queryset(self):
         query = self.request.GET.get("q")
         object_list = Profile.objects.filter(
-            Q(user__username__icontains=query)
+            (Q(user__username__icontains=query) & Q(user__is_staff=False))
         )
         return object_list
     

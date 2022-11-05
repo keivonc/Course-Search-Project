@@ -27,18 +27,27 @@
     </div>
     
     <div>
-        <h5>Search Results</h5>
+        <h5>Search Results for "{{search_query}}"</h5>
         <div class='accordion' id="{{profile.user.username}}">
             {% for profile in object_list %}
             <div class='accordion-item'> 
                 <h2 class="accordion-header" id="{{ profile.user.username }}">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapse{{forloop.counter}}">
-                        {{ profile.user.username }}, {{profile.user.email}}, {{ profile.year }}
+                        <h5>{{profile.user.first_name}} {{profile.user.last_name}} ({{profile.user.username}})</h5>
                     </button>
                 </h2>
                 <div id="collapse{{forloop.counter}}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#{{profile.user.username}}">
                     <div class="accordion-body">
-                        <p> This would be freaking awesome if it worked</p>
+                        {%if profile.saved_courses == None%}
+                            <p>This user doesn't have any saved courses</p>
+                        {%else%}
+                            <ul>
+                                {%for course in profile.saved_courses%}
+
+                                    <li>{{course}}</li>
+                                {%endfor%}
+                            </ul>
+                        {%endif%}
                     </div>
                 </div>
             {% comment %} {{ profile.user.username }}, {{profile.user.email}}, {{ profile.year }} {% endcomment %}
