@@ -163,7 +163,7 @@ class SearchUsersResultsView(ListView):
     def get_queryset(self):
         query = self.request.GET.get("q")
         object_list = Profile.objects.filter(
-            (Q(user__username__icontains=query) & Q(user__is_staff=False))
+            ((Q(user__username__icontains=query) | Q(user__first_name__icontains=query) | Q(user__last_name__icontains=query)) & Q(user__is_staff=False))
         )
         return object_list
     
