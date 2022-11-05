@@ -7,9 +7,9 @@
 
 <html>
 <ul>
-    {% for user in object_list %}
+    {% for profile in object_list %}
     <li>
-      {{ user.username }}, {{ user.email }}
+      {{ profile.user.username }}, {{profile.user.email}}, {{ profile.year }}
     </li>
   {% endfor %}
 </ul>

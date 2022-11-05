@@ -152,13 +152,13 @@ class SearchUsersHomeView(TemplateView):
     template_name = 'search_users_page.html'
 
 class SearchUsersResultsView(ListView):
-    model=User
+    model=Profile
     template_name= 'search_users_results.html'
 
     def get_queryset(self):
         query = self.request.GET.get("q")
-        object_list = User.objects.filter(
-            Q(username__icontains=query) | Q(first_name__icontains=query)
+        object_list = Profile.objects.filter(
+            Q(user__username__icontains=query)
         )
         return object_list
     
