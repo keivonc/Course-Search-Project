@@ -20,12 +20,42 @@
                     </li>
                 </a>
             </form> -->
+            <!-- <form method="POST">
+                {% csrf_token %}
+                
+                <input type="submit" class="btn" name="add_to_saved" value="{{department}}, {{section.catalog_number}}, {{section.description}} "/> -->
             <form method="POST">
                 {% csrf_token %}
                 <!-- <input hidden type="submit" class="btn" name="info" value="test"/> -->
-                <input type="submit" class="btn" name="add_to_saved" value="{{department}}, {{section.catalog_number}}, {{section.description}} "/>
+                <div1>
+                    <button>
+            
+                        <input type="hidden" id="form1" class="btn" name="add_to_saved"
+                            value="{{department}}, {{section.catalog_number}}, {{section.description}} " />
+                        Save</button>
+                    <!-- <label for="form1">Save</label> -->
+                </div1>
+            
+            
+            
+            
+            
+            
+            
+            
+
             </form>
             {%endfor%}
+
+
+
+
+
+
+
+
+
+            
         </ul>
         {% if not sections %}
         </br>
