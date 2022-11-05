@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core import serializers
 from django.urls import reverse_lazy
-from django.db.models import F
+from django.db.models import F, Q
 
 from .api_loader import *
 from .models import Section, Meeting, Profile, User
@@ -146,10 +146,19 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('users-home')
 
+
+# https://learndjango.com/tutorials/django-search-tutorial
 class SearchUsersHomeView(TemplateView):
     template_name = 'search_users_page.html'
 
 class SearchUsersResultsView(ListView):
     model=User
     template_name= 'search_users_results.html'
-    queryset = User.objects.filter(username__icontains="mld2eg")
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        object_list = User.objects.filter(
+            Q(username__icontains=query) | Q(first_name__icontains=query)
+        )
+        return object_list
+    
