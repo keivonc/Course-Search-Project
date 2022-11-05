@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name="home.html"), name='home'),
     path('search/', TemplateView.as_view(template_name="search_page.html"), name='users-home'),
+    path('search/users/', TemplateView.as_view(template_name="search_users_page.html"), name='search-users-home'),
     path('departments/', views.get_departments, name='all_departments'),
     path('departments/<str:dept>', views.find_all_by_dept_v2, name='dept_page'),
     path('departments/<str:dept>/<str:cn>/<str:desc>/info', views.info, name='course_page'),
