@@ -4,4 +4,10 @@ Things to do:
 - Need the ability to unsave a course from the saved courses page
 - Departments page needs an updated UI
 - Home page should have all searching options and other information
-- 
+- hyperlink departments or add description of mnemonic (i.e. CS - Computer Science)
+
+- ability to add friends
+- add ways to search for courses other than by department mnemonic (course number and instructor)
+- ability to add courses to saved courses without time conflicts and not allowing users to save multiple sections of same course
+- add tests for major features
+- ability to save schedule and comment on others schedule
