@@ -64,7 +64,10 @@ def find_all_by_dept_v2(request, dept):
     sections = sections.order_by('catalog_number')
     if request.POST.get('add_to_saved'):
         profile = get_object_or_404(Profile, user=request.user)
-        profile.saved_courses += [request.POST.get('add_to_saved')]
+        if not profile.saved_courses:
+            profile.saved_courses = [request.POST.get("add_to_saved")]
+        else:
+            profile.saved_courses += [request.POST.get('add_to_saved')]
         profile.save(update_fields=["saved_courses"])
     return render(request, 'findallbydept.html', {'sections': sections, "department": dept})
 
