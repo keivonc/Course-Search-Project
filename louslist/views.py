@@ -89,6 +89,8 @@ def get_saved_courses(request):
     saved_courses = Profile.objects.filter(user__username=request.user.username).values('saved_courses')
     saved_courses1 = saved_courses[0]['saved_courses']
     sections = Section.objects.none()
+    if not saved_courses1:
+        return render(request, 'saved_courses.html', {'sections': sections})
     for section in saved_courses1:
         section1 = section.split(",")
         sections |= Section.objects.filter(subject=section1[0], catalog_number=section1[1][1:], description=section1[2][1:-1]).distinct('catalog_number', 'description')
