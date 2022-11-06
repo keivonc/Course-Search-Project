@@ -172,3 +172,14 @@ class SearchUsersResultsView(ListView):
         )
         return object_list
     
+def dept_page(request, dept):
+    all_sections = Section.objects.filter(Q(subject=dept))
+    data = {}
+    for section in all_sections:
+        index = section.subject + " " + section.catalog_number + " " + section.description
+        if index in data:
+            data[index].append(section)
+        else:
+            data[index] = [section]
+    
+    return render(request, "display_department.html", {"data": data, "department": dept})
