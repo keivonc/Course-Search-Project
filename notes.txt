@@ -1,3 +1,7 @@
-need to implement ability to save courses
-need to implement ability to look at other users saved schedules
-need to add tests
+Things to do:
+- Ability to upload a profile picture, profile search page also uses this picture
+- Update UI of the courses page. Should have all information displayed right on the page
+- Need the ability to unsave a course from the saved courses page
+- Departments page needs an updated UI
+- Home page should have all searching options and other information
+- 
