@@ -25,7 +25,6 @@ from louslist.models import Instructor, Section, Meeting
 #         print(Section.objects.all())
 #         response = self.client.get(reverse('dept_page', kwargs={'dept': 'ANTH'}))
 #         self.assertEqual(response.status_code, 200)
-
 # class SISAPITests(TestCase):
 #     # Get this error: raise NotSupportedError(django.db.utils.NotSupportedError: DISTINCT ON fields is not supported by this database backend
 #     # add 'name='dept_page'' to urls.py path
