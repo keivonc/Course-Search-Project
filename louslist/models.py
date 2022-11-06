@@ -45,4 +45,4 @@ class Profile(models.Model):
     saved_courses = models.JSONField(default=list, blank=True, null=True)
 
     def __str__(self):
-        return self.user.username + ", " + self.major + ", " + self.year + ", " + self.saved_courses
+        return str(self.user.username) + ", " + str(self.major) + ", " + str(self.year) + ", " + str(self.saved_courses)
