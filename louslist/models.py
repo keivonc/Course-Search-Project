@@ -26,7 +26,7 @@ class Section(models.Model):
     enrollment_available = models.IntegerField()
     topic = models.CharField(max_length=50)
     def __str__(self):
-        return self.course_number, self.subject
+        return self.subject
 
 class Meeting(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
@@ -35,27 +35,14 @@ class Meeting(models.Model):
     end_time = models.CharField(max_length=50)
     facility_description = models.CharField(max_length=50)
     def __str__(self):
-        return str(self.days)
+        return str(self.end_time)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
     major = models.CharField(max_length=50)
     year = models.CharField(max_length=10)
     bio = models.TextField()
-    schedule = ArrayField(models.CharField(max_length=500), blank=True)
+    saved_courses = models.JSONField(default=list, blank=True, null=True)
 
     def __str__(self):
-        return self.user.username, self.major, self.year
-
-    def save(self, *args, **kwargs):
-        super().save()
-
-        img = Image.open(self.avatar.path)
-
-        if img.height > 100 or img.width > 100:
-            new_img = (100, 100)
-            img.thumbnail(new_img)
-            img.save(self.avatar.path)
-
+        return str(self.user.username) + ", " + str(self.major) + ", " + str(self.year) + ", " + str(self.saved_courses)

@@ -4,6 +4,28 @@ from django.urls import reverse
 from louslist.models import Instructor, Section, Meeting
 
 # class SISAPITests(TestCase):
+#     def setUp(self):
+#         inst = Instructor.objects.create(name='Rachel Apone')
+#         Section.objects.create(instructor=inst, course_number='10309',
+# 	                                     semester_code='1228', course_section="001",
+# 	                                     subject="ANTH",
+# 	                                     catalog_number="1010",
+# 	                                     description="Introduction to Anthropology",
+# 	                                     units="3",
+# 	                                     component="LEC",
+# 	                                     class_capacity=25,
+# 	                                     wait_list=0,
+# 	                                     wait_cap=30,
+# 	                                     enrollment_total=23,
+# 	                                     enrollment_available=2,
+#                                          topic="")
+
+#     def test_deptpage(self):
+#         print(reverse('dept_page', kwargs={'dept': 'ANTH'}))
+#         print(Section.objects.all())
+#         response = self.client.get(reverse('dept_page', kwargs={'dept': 'ANTH'}))
+#         self.assertEqual(response.status_code, 200)
+# class SISAPITests(TestCase):
 #     # Get this error: raise NotSupportedError(django.db.utils.NotSupportedError: DISTINCT ON fields is not supported by this database backend
 #     # add 'name='dept_page'' to urls.py path
 #     # def test_deptpage(self):

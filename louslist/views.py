@@ -3,15 +3,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
+from django.views.generic import TemplateView, ListView
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core import serializers
 from django.urls import reverse_lazy
+from django.db.models import F, Q
 
 from .api_loader import *
-from .models import Section, Meeting
+from .models import Section, Meeting, Profile, User
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
-import os
+# import os
 
 @login_required
 def load_api(request):
@@ -42,20 +44,58 @@ def find_all_by_dept_v2(request, dept):
     # load_json_file(filename)
     # for f in os.listdir('JSON'):
     #     load_json_file('JSON/' + f)
+    # for query in Meeting.objects.all():
+    #     if query.start_time:
+    #         if int(query.start_time[0:2]) > 12:
+    #             query.start_time = str(int(query.start_time[0:2]) - 12) + ":" + query.start_time[3:5] + " PM"
+    #             query.save()
+    #         else: 
+    #             query.start_time = str(int(query.start_time[0:2])) + ":" + query.start_time[3:5] + " AM"
+    #             query.save()
+     # for query in Meeting.objects.all():
+    #     if query.end_time:
+    #         if int(query.end_time[0:2]) > 12:
+    #             query.end_time = str(int(query.end_time[0:2]) - 12) + ":" + query.end_time[3:5] + " PM"
+    #             query.save()
+    #         else: 
+    #             query.end_time = str(int(query.end_time[0:2])) + ":" + query.end_time[3:5] + " AM"
+    #             query.save()
     sections = Section.objects.filter(subject=dept).distinct('description', 'catalog_number')
     sections = sections.order_by('catalog_number')
+    if request.POST.get('add_to_saved'):
+        profile = get_object_or_404(Profile, user=request.user)
+        if not profile.saved_courses:
+            profile.saved_courses = [request.POST.get("add_to_saved")]
+        else:
+            profile.saved_courses += [request.POST.get('add_to_saved')]
+        profile.save(update_fields=["saved_courses"])
     return render(request, 'findallbydept.html', {'sections': sections, "department": dept})
 
 @login_required
 def info(request, dept, desc, cn):
     # filename = "JSON/" + dept + ".json"
     # load_json_file(filename)
-    sections = Section.objects.filter(description=desc, catalog_number=cn)
-    meetings = Meeting.objects.all()
-    return render(request, 'des.html', {'sections': sections, 'meetings': meetings, "department": dept, "description": desc, 'catalog_number': cn})
+    # sections = Section.objects.filter(description=desc, catalog_number=cn)
+    # meetings = Meeting.objects.all()
+    # return render(request, 'des.html', {'sections': sections, 'meetings': meetings, "department": dept, "description": desc, 'catalog_number': cn})
+    meetings = Meeting.objects.filter(section__description=desc, section__catalog_number=cn)
+    return render(request, 'des.html', {'meetings': meetings, "department": dept, "description": desc, 'catalog_number': cn})
 
 def login(request):
     return render(request, 'login.html')
+
+@login_required
+def get_saved_courses(request):
+    saved_courses = Profile.objects.filter(user__username=request.user.username).values('saved_courses')
+    saved_courses1 = saved_courses[0]['saved_courses']
+    sections = Section.objects.none()
+    if not saved_courses1:
+        return render(request, 'saved_courses.html', {'sections': sections})
+    for section in saved_courses1:
+        section1 = section.split(",")
+        sections |= Section.objects.filter(subject=section1[0], catalog_number=section1[1][1:], description=section1[2][1:-1]).distinct('catalog_number', 'description')
+    sections = sections.order_by('catalog_number')
+    return render(request, 'saved_courses.html', {'sections': sections})
 
 class RegisterView(View):
     form_class = RegisterForm
@@ -110,3 +150,25 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     template_name = 'change_password.html'
     success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('users-home')
+
+
+# https://learndjango.com/tutorials/django-search-tutorial
+class SearchUsersHomeView(TemplateView):
+    template_name = 'search_users_page.html'
+
+class SearchUsersResultsView(ListView):
+    model=Profile
+    template_name= 'search_users_results.html'
+
+    def get_context_data(self,**kwargs):
+        context = super(SearchUsersResultsView,self).get_context_data(**kwargs)
+        context['search_query'] = self.request.GET.get("q")
+        return context
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        object_list = Profile.objects.filter(
+            ((Q(user__username__icontains=query) | Q(user__first_name__icontains=query) | Q(user__last_name__icontains=query)) & Q(user__is_staff=False))
+        )
+        return object_list
+    

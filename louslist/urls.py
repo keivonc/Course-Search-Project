@@ -24,6 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name="home.html"), name='home'),
     path('search/', TemplateView.as_view(template_name="search_page.html"), name='users-home'),
+    path('search/users/', views.SearchUsersHomeView.as_view(), name='search_users_home_view'),
+    path('search/users/results', views.SearchUsersResultsView.as_view(), name='search_users_results_view'),
     path('departments/', views.get_departments, name='all_departments'),
     path('departments/<str:dept>', views.find_all_by_dept_v2, name='dept_page'),
     path('departments/<str:dept>/<str:cn>/<str:desc>/info', views.info, name='course_page'),
@@ -33,5 +35,6 @@ urlpatterns = [
                                            authentication_form=views.LoginForm), name='login'),
     path('search/logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name='logout'),
     path('password-change/', views.ChangePasswordView.as_view(), name='password_change'),
+    path('search/saved_courses/', views.get_saved_courses, name='saved_courses'),
     re_path(r'^oauth/', include('social_django.urls', namespace='social')),
 ]
