@@ -9,6 +9,13 @@ class Instructor(models.Model):
     def __str__(self):
         return str(self.name)
 
+# class Course(models.Model):
+#     subject = models.CharField(max_length=4)
+#     catalog_number = models.CharField(max_length=4)
+#     description = models.TextField()
+#     List of sections
+    
+
 class Section(models.Model):
     instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)
     course_number = models.IntegerField()

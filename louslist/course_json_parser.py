@@ -69,6 +69,7 @@ class CourseJsonParser:
     
     def load_all(self):
         self.get_meetings()
+        # load the sections into course model
 
 
 

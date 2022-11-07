@@ -178,7 +178,6 @@ def dept_page(request, dept):
     data = {}
     for section in all_sections:
         index = section.subject + " " + section.catalog_number + " " + section.description
-        meetings = Meeting.objects.filter()
         if index in data:
             data[index].append(section)
         else:
@@ -218,7 +217,7 @@ def saved_sections(request):
     profile = get_object_or_404(Profile, user=request.user)
     sections = profile.saved_sections.all()
 
-    data = {}
+    data = {} # TURK 1010 Elematary Turkish 1 : [Section, Section, Section]
     for section in sections:
         index = section.subject + " " + section.catalog_number + " " + section.description
         if index in data:
