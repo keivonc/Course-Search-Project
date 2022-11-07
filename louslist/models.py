@@ -26,7 +26,7 @@ class Section(models.Model):
     enrollment_available = models.IntegerField()
     topic = models.CharField(max_length=50)
     def __str__(self):
-        return str(self.subject)
+        return self.subject
 
 class Meeting(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
@@ -47,4 +47,4 @@ class Profile(models.Model):
 
 
     def __str__(self):
-        return self.user.username + ", " + self.major + ", " + self.year + ", " + str(self.saved_courses)
+        return str(self.user.username) + ", " + str(self.major) + ", " + str(self.year) + ", " + str(self.saved_courses)
