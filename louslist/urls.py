@@ -29,6 +29,7 @@ urlpatterns = [
     path('departments/', views.get_departments, name='all_departments'),
     #path('departments/<str:dept>', views.find_all_by_dept_v2, name='dept_page'),
     path('departments/<str:dept>', views.dept_page, name='dept_page'),
+    path('section/save', views.save_section, name='save_section'),
     path('departments/<str:dept>/<str:cn>/<str:desc>/info', views.info, name='course_page'),
     path('register/', views.RegisterView.as_view(), name='users-register'),
     path('profile/', views.profile, name='users-profile'),

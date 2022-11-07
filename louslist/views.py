@@ -183,3 +183,17 @@ def dept_page(request, dept):
             data[index] = [section]
     
     return render(request, "display_department.html", {"data": data, "department": dept})
+
+@login_required
+def save_section(request):
+    
+    profile = get_object_or_404(Profile, user=request.user)
+    course_number = request.POST.get("section_to_save")
+    
+    section = Section.objects.get(course_number=course_number)
+    
+    department = section.subject
+    
+    profile.saved_sections.add(section)
+
+    return redirect("dept_page", dept=department)
