@@ -4,7 +4,7 @@ from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
 from django.views.generic import TemplateView, ListView
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core import serializers
 from django.urls import reverse_lazy
@@ -171,7 +171,8 @@ class SearchUsersResultsView(ListView):
             ((Q(user__username__icontains=query) | Q(user__first_name__icontains=query) | Q(user__last_name__icontains=query)) & Q(user__is_staff=False))
         )
         return object_list
-    
+
+@login_required
 def dept_page(request, dept):
     all_sections = Section.objects.filter(Q(subject=dept))
     data = {}
@@ -182,7 +183,8 @@ def dept_page(request, dept):
         else:
             data[index] = [section]
     
-    return render(request, "display_department.html", {"data": data, "department": dept})
+    profile = get_object_or_404(Profile, user=request.user)
+    return render(request, "display_department.html", {"data": data, "department": dept, "profile": profile})
 
 @login_required
 def save_section(request):
@@ -197,3 +199,14 @@ def save_section(request):
     profile.saved_sections.add(section)
 
     return redirect("dept_page", dept=department)
+
+@login_required
+def unsave_section(request):
+    profile = get_object_or_404(Profile, user=request.user)
+    course_number = request.POST.get("section_to_unsave")
+    section = Section.objects.get(course_number=course_number)
+    profile.saved_sections.remove(section)
+
+    next = request.POST.get("next", "/")
+
+    return HttpResponseRedirect(next)

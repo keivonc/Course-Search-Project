@@ -30,11 +30,19 @@
                             <div class="col-1">{{section.enrollment_total}} / {{section.class_capacity}}</div>
                             <div class="col-3">{{section.instructor.name}}</div>
                             <div class="col-1">
-
-                                <form action="{% url 'save_section' %}" method="post">
-                                    {% csrf_token %}
-                                    <button class="btn btn-primary py-0" name="section_to_save" type="submit" value={{section.course_number}}>Save</button>
-                                </form>
+                                {%if section in profile.saved_sections.all%}
+                                    <form action="{% url 'unsave_section' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="next" value="{{request.path}}"/>
+                                        <button class="btn btn-outline-primary py-0" name="section_to_unsave" type="submit" value={{section.course_number}}>Unsave</button>
+                                    </form>
+                                {% else %}
+                                    <form action="{% url 'save_section' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="next" value="{{request.path}}"/>
+                                        <button class="btn btn-primary py-0" name="section_to_save" type="submit" value={{section.course_number}}>Save</button>
+                                    </form>
+                                {%endif%}
                             </div>
 
                         </div>
