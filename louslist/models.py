@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from PIL import Image
-
+from datetime import datetime
 class Instructor(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField()
@@ -28,6 +28,12 @@ class Section(models.Model):
     def __str__(self):
         return self.subject
 
+    def get_meetings(self):
+        
+        return Meeting.objects.filter(section=self)
+
+
+
 class Meeting(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     days = models.CharField(max_length=50) 
@@ -35,7 +41,13 @@ class Meeting(models.Model):
     end_time = models.CharField(max_length=50)
     facility_description = models.CharField(max_length=50)
     def __str__(self):
-        return str(self.end_time)
+        #"08.30.00.000000-05:00"
+        #start_time = datetime.strptime(self.start_time, "%H.%M.%S.%f-%z")
+        start_time = self.start_time
+        end_time = self.end_time
+        return str(self.days) + " " + start_time[:-3] + "-" + end_time
+
+        return "meeting" # str(self.days) + " " + start_time.hour + ":" + start_time.minute + "-" + end_time.hour + ":" + end_time.minute
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -43,7 +55,7 @@ class Profile(models.Model):
     year = models.CharField(max_length=10)
     bio = models.TextField()
     saved_courses = models.JSONField(default=list, blank=True, null=True)
-    saved_sections = models.ManyToManyField(Section, blank=True, null=True)
+    saved_sections = models.ManyToManyField(Section, blank=True)
 
 
     def __str__(self):

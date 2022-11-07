@@ -178,6 +178,7 @@ def dept_page(request, dept):
     data = {}
     for section in all_sections:
         index = section.subject + " " + section.catalog_number + " " + section.description
+        meetings = Meeting.objects.filter()
         if index in data:
             data[index].append(section)
         else:
@@ -188,6 +189,7 @@ def dept_page(request, dept):
 
 @login_required
 def save_section(request):
+    #TODO: Need to validate the saves
     
     profile = get_object_or_404(Profile, user=request.user)
     course_number = request.POST.get("section_to_save")
