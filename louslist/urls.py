@@ -31,6 +31,7 @@ urlpatterns = [
     path('departments/<str:dept>', views.dept_page, name='dept_page'),
     path('section/save', views.save_section, name='save_section'),
     path('section/unsave', views.unsave_section, name='unsave_section'),
+    path('section/', views.saved_sections, name="view_saved_sections"),
     path('departments/<str:dept>/<str:cn>/<str:desc>/info', views.info, name='course_page'),
     path('register/', views.RegisterView.as_view(), name='users-register'),
     path('profile/', views.profile, name='users-profile'),

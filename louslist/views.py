@@ -210,3 +210,32 @@ def unsave_section(request):
     next = request.POST.get("next", "/")
 
     return HttpResponseRedirect(next)
+
+def saved_sections(request):
+
+    profile = get_object_or_404(Profile, user=request.user)
+    sections = profile.saved_sections.all()
+
+    data = {}
+    for section in sections:
+        index = section.subject + " " + section.catalog_number + " " + section.description
+        if index in data:
+            data[index].append(section)
+        else:
+            data[index] = [section]
+    
+    return render(request, "display_department.html", {"data": data, "department": "Saved", "profile": profile})
+
+
+
+class SavedSectionsView(ListView):
+    model=Section
+    template_name= 'saved_sections.html'
+
+
+    def get_queryset(self):
+        profile = get_object_or_404(Profile, user=self.request.user)
+        return profile.saved_sections.all()
+    
+
+    
