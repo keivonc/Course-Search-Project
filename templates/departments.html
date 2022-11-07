@@ -3,7 +3,9 @@
 {{department}}
 <ul class="list-group list-group-light list-group-small">
     {% for section in sections %}
-    <li class="list-group-item"> {{section.subject}}</li>
+    <a href="/departments/{{section.subject}}">
+        <li class="list-group-item" name="course"> {{section.subject}} </li>
+    </a>
     {%endfor%}
 </ul>
 {% endblock content %}
