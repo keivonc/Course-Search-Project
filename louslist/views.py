@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 from django.db.models import F, Q
 
 from .api_loader import *
-from .models import Section, Meeting, Profile, User
+from .models import Section, Meeting, Profile, User, Instructor
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
 # import os
 
@@ -71,6 +71,31 @@ def find_all_by_dept_v2(request, dept):
         profile.save(update_fields=["saved_courses"])
     return render(request, 'findallbydept.html', {'sections': sections, "department": dept})
 
+@login_required
+def find_all_by_instructor(request, instr):
+    sections = Section.objects.filter(instructor__name__iexact=instr).distinct('description', 'catalog_number')
+    sections = sections.order_by('catalog_number')
+    if request.POST.get('add_to_saved'):
+        profile = get_object_or_404(Profile, user=request.user)
+        if not profile.saved_courses:
+            profile.saved_courses = [request.POST.get("add_to_saved")]
+        else:
+            profile.saved_courses += [request.POST.get('add_to_saved')]
+        profile.save(update_fields=["saved_courses"])
+    return render(request, 'findallbyinstructor.html', {'sections': sections, 'instructor': instr})
+
+@login_required
+def find_all_by_catalog_number(request, cn):
+    sections = Section.objects.filter(catalog_number=cn).distinct('description', 'catalog_number')
+    if request.POST.get('add_to_saved'):
+        profile = get_object_or_404(Profile, user=request.user)
+        if not profile.saved_courses:
+            profile.saved_courses = [request.POST.get("add_to_saved")]
+        else:
+            profile.saved_courses += [request.POST.get('add_to_saved')]
+        profile.save(update_fields=["saved_courses"])
+    return render(request, 'findallbycn.html', {'sections': sections, 'catalog_number': cn})
+    
 @login_required
 def info(request, dept, desc, cn):
     # filename = "JSON/" + dept + ".json"

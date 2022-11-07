@@ -40,5 +40,7 @@ urlpatterns = [
     path('search/logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name='logout'),
     path('password-change/', views.ChangePasswordView.as_view(), name='password_change'),
     path('search/saved_courses/', views.get_saved_courses, name='saved_courses'),
+    path('instructors/<str:instr>', views.find_all_by_instructor, name="instructor_page"),
+    path('catalog_number/<str:cn>', views.find_all_by_catalog_number, name="catalog_number_page"),
     re_path(r'^oauth/', include('social_django.urls', namespace='social')),
 ]
