@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.urls import reverse 
-from louslist.models import Instructor, Section, Meeting, Profile
+from louslist.models import Section, Meeting, Profile
 
 class Sprint5Tests(TestCase):
 
