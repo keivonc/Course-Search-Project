@@ -6,7 +6,7 @@
 <center>
     <br>
     <div style="padding-left:20px">
-        <div class="search">
+        {% comment %} <div class="search">
             <form role="search" method="get" id="search">
                 <div>
                     <p> <strong> Enter a department: </strong> </p>
@@ -61,6 +61,15 @@
                     </script>
                 </div>
             </form>
+        </div>
+        <br/> {% endcomment %}
+        <div class="search4">
+            <p> <strong> Search for a course or instructor: </strong> </p>
+            <form action="{% url 'search_general_results' %}" method="get">
+                <input name="q" type="text" placeholder="Search course or instructor"/>
+                <button type="submit">Search</button>
+            </form>
+
         </div>
     </div>
 </center>

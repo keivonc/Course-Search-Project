@@ -202,6 +202,27 @@ class SearchUsersResultsView(ListView):
         )
         return object_list
 
+
+class SearchGeneralResultsView(ListView):
+    model = Course
+    template_name = "search_general_results.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get("q")
+        context["instructors"] = list(Section.objects.filter(Q(instructor_name__icontains=query)).order_by().values_list("instructor_name", flat=True).distinct())
+        context["search_query"] = query
+        return context
+    
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        object_list = Course.objects.filter(
+            Q(subject__icontains=query) | Q(catalog_number__icontains=query)
+        ).order_by("subject", "catalog_number")
+        return object_list
+
+    
+
 @login_required
 def dept_page(request, dept):
     courses = Course.objects.filter(subject=dept)
@@ -224,7 +245,7 @@ def section_page(request, dept, catalog_number, course_number):
     section = Section.objects.get(course_number=course_number)
     
     return render(request, "section_page.html", {"section": section, "profile": profile})
-    
+
     
 
 @login_required

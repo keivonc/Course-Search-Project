@@ -26,6 +26,7 @@ urlpatterns = [
     path('search/', TemplateView.as_view(template_name="search_page.html"), name='users-home'),
     path('search/users/', views.SearchUsersHomeView.as_view(), name='search_users_home_view'),
     path('search/users/results', views.SearchUsersResultsView.as_view(), name='search_users_results_view'),
+    path('search/general', views.SearchGeneralResultsView.as_view(), name="search_general_results"),
     path('departments/', views.get_departments, name='all_departments'),
     #path('departments/<str:dept>', views.find_all_by_dept_v2, name='dept_page'),
     path('loadall/', views.loadall, name="loadall"),
