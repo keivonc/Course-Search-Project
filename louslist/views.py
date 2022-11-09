@@ -28,9 +28,8 @@ def load_api_by_dept(request, dept):
 
 @login_required
 def get_departments(request):
-    sections = Section.objects.all().values('subject').distinct()
-    sections = sections.order_by('subject')
-    return render(request, 'departments.html', {'sections': sections})
+    courses = Course.objects.all().values('subject').distinct().order_by('subject')
+    return render(request, 'departments.html', {'courses': courses})
 
 @login_required
 def find_all_by_dept(request, dept):
