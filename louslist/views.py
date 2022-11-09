@@ -168,6 +168,7 @@ def profile(request):
 
 class CustomLoginView(LoginView):
     form_class = LoginForm
+
     def form_valid(self, form):
         remember_me = form.cleaned_data.get('remember_me')
         if not remember_me:
@@ -214,9 +215,15 @@ def course_page(request, dept, catalog_number):
     course = Course.objects.get(subject=dept, catalog_number=catalog_number)
     profile = get_object_or_404(Profile, user=request.user)
 
-
-    
     return render(request, "course_page.html", {"course": course, "profile": profile})
+    
+@login_required
+def section_page(request, dept, catalog_number, course_number):
+
+    profile = get_object_or_404(Profile, user=request.user)
+    section = Section.objects.get(course_number=course_number)
+    
+    return render(request, "section_page.html", {"section": section, "profile": profile})
     
     
 
