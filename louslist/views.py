@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 from django.db.models import F, Q
 
 from .api_loader import *
-from .models import Section, Meeting, Profile, User
+from .models import Section, Meeting, Profile, Course
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
 # import os
 
@@ -204,17 +204,15 @@ class SearchUsersResultsView(ListView):
 
 @login_required
 def dept_page(request, dept):
-    all_sections = Section.objects.filter(Q(subject=dept))
-    data = {}
-    for section in all_sections:
-        index = section.subject + " " + section.catalog_number + " " + section.description
-        if index in data:
-            data[index].append(section)
-        else:
-            data[index] = [section]
+    courses = Course.objects.filter(subject=dept)
     
     profile = get_object_or_404(Profile, user=request.user)
-    return render(request, "display_department.html", {"data": data, "department": dept, "profile": profile})
+    return render(request, "display_department.html", {"courses": courses, "department": dept, "profile": profile})
+
+@login_required
+def course_page(request):
+    
+    
 
 @login_required
 def save_section(request):

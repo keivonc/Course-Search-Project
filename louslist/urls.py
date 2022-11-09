@@ -30,6 +30,7 @@ urlpatterns = [
     #path('departments/<str:dept>', views.find_all_by_dept_v2, name='dept_page'),
     path('loadall/', views.loadall, name="loadall"),
     path('departments/<str:dept>', views.dept_page, name='dept_page'),
+    path('departments/<str:dept>/<str:catalog_number', views.)
     path('section/save', views.save_section, name='save_section'),
     path('section/unsave', views.unsave_section, name='unsave_section'),
     path('section/', views.saved_sections, name="view_saved_sections"),

@@ -24,6 +24,7 @@ class CourseJsonParser:
         description=self.json_object.get("description")
         if not Course.objects.filter(subject=subject, catalog_number=catalog_number, description=description):
             Course.objects.create(subject=subject, catalog_number=catalog_number, description=description)
+            print("Created course", subject, catalog_number, description)
         return Course.objects.get(subject=subject, catalog_number=catalog_number, description=description)
 
 
@@ -64,17 +65,20 @@ class CourseJsonParser:
         for meeting in self.json_object.get("meetings", []):
             start_time = meeting.get("start_time")
             end_time = meeting.get("end_time")
-            start_ampm = "AM" if int(start_time[0:2]) < 12 else "PM"
-            end_ampm = "AM" if int(end_time[0:2]) < 12 else "PM"
-            start_hour = start_time[0:2] if int(start_time[0:2]) < 13 else str(int(start_time[0:2]-12))
-            end_hour = end_time[0:2] if int(end_time[0:2]) < 13 else str(int(end_time[0:2]-12))
-            start_time_str = start_hour + ":" + start_time[3:5] + start_ampm
-            end_time_str = end_hour + ":" + end_time[3:5] + end_ampm
-            new_meeting = Meeting(section=section,
-                                    days = meeting.get("days"),
-                                    start_time = start_time_str,
-                                    end_time = end_time_str,
-                                    facility_description = meeting.get("facility_description"))
+            if not start_time or not end_time:
+                new_meeting = Meeting(section=section, days=meeting.get("days"), start_time="", end_time="", facility_description=meeting.get("facility_description"))
+            else:
+                start_ampm = "AM" if int(start_time[0:2]) < 12 else "PM"
+                end_ampm = "AM" if int(end_time[0:2]) < 12 else "PM"
+                start_hour = start_time[0:2] if int(start_time[0:2]) < 13 else str(int(start_time[0:2])-12)
+                end_hour = end_time[0:2] if int(end_time[0:2]) < 13 else str(int(end_time[0:2])-12)
+                start_time_str = start_hour + ":" + start_time[3:5] + start_ampm
+                end_time_str = end_hour + ":" + end_time[3:5] + end_ampm
+                new_meeting = Meeting(section=section,
+                                        days = meeting.get("days"),
+                                        start_time = start_time_str,
+                                        end_time = end_time_str,
+                                        facility_description = meeting.get("facility_description"))
             meetings.append(new_meeting)
         
         for meeting in meetings:

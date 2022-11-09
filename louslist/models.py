@@ -11,16 +11,20 @@ from datetime import datetime
 
 class Course(models.Model):
     subject = models.CharField(max_length=4)
-    catalog_number = models.CharField(max_length=4)
-    description = models.TextField()
+    catalog_number = models.CharField(max_length=4, default="")
+    description = models.TextField(default="")
+
+    def __str__(self):
+        return self.subject + " " + self.catalog_number + " " + self.description
+    
     
     
 
 class Section(models.Model):
     #instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    instructor_name = models.CharField(max_length=50)
-    instructor_email = models.EmailField()
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, default=None)
+    instructor_name = models.CharField(max_length=50, default="")
+    instructor_email = models.EmailField(default="a@gmail.com")
     course_number = models.IntegerField()
     semester_code = models.IntegerField()
     course_section = models.CharField(max_length=5)
