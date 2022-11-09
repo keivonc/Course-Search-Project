@@ -20,20 +20,26 @@
                             {%endfor%}
                         </div>
 
-                        <div class="col-1">
+                        <div class="col-1 d-flex align-items-center">
                             {%if section in profile.saved_sections.all%}
                                 <form class="" action="{% url 'unsave_section' %}" method="post">
                                     {% csrf_token %}
                                     <input type="hidden" name="next" value="{{request.path}}"/>
-                                    <button class="btn btn-outline-primary py-0" name="section_to_unsave" type="submit" value={{section.course_number}}>Unsave</button>
+                                    <button class="btn btn-outline-primary" name="section_to_unsave" type="submit" value={{section.course_number}}>Unsave</button>
                                 </form>
                             {% else %}
                                 <form action="{% url 'save_section' %}" method="post">
                                     {% csrf_token %}
                                     <input type="hidden" name="next" value="{{request.path}}"/>
-                                    <button class="btn btn-primary py-0" name="section_to_save" type="submit" value={{section.course_number}}>Save</button>
+                                    <button class="btn btn-primary" name="section_to_save" type="submit" value={{section.course_number}}>Save</button>
                                 </form>
                             {%endif%}
+                        </div> 
+                        <div class="col-2 d-flex align-items-center">
+                            <form class="" action="{% url 'section_page' course.subject course.catalog_number section.course_number %}" method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-secondary" type="submit" >Section Info</button>
+                            </form>
                         </div> 
 
                     </div>

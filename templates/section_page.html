@@ -6,7 +6,13 @@
 <body>
     <div class="container pt-4">
         <ul class="list-group">
-            <li class="list-group-item" aria-current="true"> Course: {{section.course}}</li>
+            <li class="list-group-item d-flex align-items-center gap-3 " aria-current="true"> 
+                <p>Course: {{section.course}}</p>
+                <form class="" action="{% url 'course_page' section.course.subject section.course.catalog_number%}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-dark" type="submit">Go to Course</button>
+                </form>
+            </li>
             <li class="list-group-item" aria-current="true"> Section: {{section.course_section}}</li>
             <li class="list-group-item" aria-current="true"> Instructor: {{section.instructor_name}} ({{section.instructor_email}})</li>
             <li class="list-group-item" aria-current="true"> 
