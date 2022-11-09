@@ -11,3 +11,4 @@ Things to do:
 - ability to add courses to saved courses without time conflicts and not allowing users to save multiple sections of same course
 - add tests for major features
 - ability to save schedule and comment on others schedule
+

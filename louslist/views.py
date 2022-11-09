@@ -4,14 +4,14 @@ from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
 from django.views.generic import TemplateView, ListView
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core import serializers
 from django.urls import reverse_lazy
 from django.db.models import F, Q
 
 from .api_loader import *
-from .models import Section, Meeting, Profile, User, Instructor
+from .models import Section, Meeting, Profile, Course
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
 # import os
 
@@ -28,15 +28,19 @@ def load_api_by_dept(request, dept):
 
 @login_required
 def get_departments(request):
-    sections = Section.objects.all().values('subject').distinct()
-    sections = sections.order_by('subject')
-    return render(request, 'departments.html', {'sections': sections})
+    courses = Course.objects.all().values('subject').distinct().order_by('subject')
+    return render(request, 'departments.html', {'courses': courses})
 
 @login_required
 def find_all_by_dept(request, dept):
     sections = Section.objects.filter(subject=dept)
     sections_serialized = serializers.serialize('json', sections)
     return HttpResponse(sections_serialized, content_type = 'application/json')
+
+@login_required
+def loadall(request):
+    get_all_json_files()
+    return HttpResponseRedirect("/")
 
 @login_required
 def find_all_by_dept_v2(request, dept):
@@ -73,7 +77,7 @@ def find_all_by_dept_v2(request, dept):
 
 @login_required
 def find_all_by_instructor(request, instr):
-    sections = Section.objects.filter(instructor__name__iexact=instr).distinct('description', 'catalog_number')
+    sections = Section.objects.filter(instructor_name__iexact=instr).distinct('description', 'catalog_number')
     sections = sections.order_by('catalog_number')
     if request.POST.get('add_to_saved'):
         profile = get_object_or_404(Profile, user=request.user)
@@ -164,6 +168,7 @@ def profile(request):
 
 class CustomLoginView(LoginView):
     form_class = LoginForm
+
     def form_valid(self, form):
         remember_me = form.cleaned_data.get('remember_me')
         if not remember_me:
@@ -196,4 +201,95 @@ class SearchUsersResultsView(ListView):
             ((Q(user__username__icontains=query) | Q(user__first_name__icontains=query) | Q(user__last_name__icontains=query)) & Q(user__is_staff=False))
         )
         return object_list
+
+
+class SearchGeneralResultsView(ListView):
+    model = Course
+    template_name = "search_general_results.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get("q")
+        context["instructors"] = list(Section.objects.filter(Q(instructor_name__icontains=query)).order_by().values_list("instructor_name", flat=True).distinct())
+        context["search_query"] = query
+        return context
+    
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        object_list = Course.objects.filter(
+            Q(subject__icontains=query) | Q(catalog_number__icontains=query)
+        ).order_by("subject", "catalog_number")
+        return object_list
+
+    
+
+@login_required
+def dept_page(request, dept):
+    courses = Course.objects.filter(subject=dept)
+    
+    profile = get_object_or_404(Profile, user=request.user)
+    return render(request, "display_department.html", {"courses": courses, "department": dept, "profile": profile})
+
+@login_required
+def course_page(request, dept, catalog_number):
+
+    course = Course.objects.get(subject=dept, catalog_number=catalog_number)
+    profile = get_object_or_404(Profile, user=request.user)
+
+    return render(request, "course_page.html", {"course": course, "profile": profile})
+    
+@login_required
+def section_page(request, dept, catalog_number, course_number):
+
+    profile = get_object_or_404(Profile, user=request.user)
+    section = Section.objects.get(course_number=course_number)
+    
+    return render(request, "section_page.html", {"section": section, "profile": profile})
+
+    
+
+@login_required
+def save_section(request):
+    #TODO: Need to validate the saves
+    
+    profile = get_object_or_404(Profile, user=request.user)
+    course_number = request.POST.get("section_to_save")
+    
+    section = Section.objects.get(course_number=course_number)
+    
+    profile.saved_sections.add(section)
+    next = request.POST.get("next", "/")
+
+    return HttpResponseRedirect(next)
+
+@login_required
+def unsave_section(request):
+    profile = get_object_or_404(Profile, user=request.user)
+    course_number = request.POST.get("section_to_unsave")
+    section = Section.objects.get(course_number=course_number)
+    profile.saved_sections.remove(section)
+
+    next = request.POST.get("next", "/")
+
+    return HttpResponseRedirect(next)
+
+def saved_sections(request):
+
+    profile = get_object_or_404(Profile, user=request.user)
+    sections = profile.saved_sections.all()
+    
+    return render(request, "saved_courses.html", {"sections": sections, "profile": profile})
+
+
+
+class SavedSectionsView(ListView):
+    model=Section
+    template_name= 'saved_sections.html'
+
+
+    def get_queryset(self):
+        profile = get_object_or_404(Profile, user=self.request.user)
+        return profile.saved_sections.all()
+    
+
     

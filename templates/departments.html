@@ -2,9 +2,9 @@
 {% block content %}
 {{department}}
 <ul class="list-group list-group-light list-group-small">
-    {% for section in sections %}
-    <a href="/departments/{{section.subject}}">
-        <li class="list-group-item" name="course"> {{section.subject}} </li>
+    {% for course in courses %}
+    <a href="/departments/{{course.subject}}">
+        <li class="list-group-item" name="course"> {{course.subject}} </li>
     </a>
     {%endfor%}
 </ul>

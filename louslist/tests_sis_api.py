@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.urls import reverse 
-from louslist.models import Instructor, Section, Meeting
+from louslist.models import Section, Meeting
 
 # class SISAPITests(TestCase):
 #     def setUp(self):
