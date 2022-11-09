@@ -59,7 +59,7 @@ class Meeting(models.Model):
         #start_time = datetime.strptime(self.start_time, "%H.%M.%S.%f-%z")
         start_time = self.start_time
         end_time = self.end_time
-        return str(self.days) + " " + start_time[:-3] + "-" + end_time
+        return str(self.days) + " " + start_time[:-2].lstrip("0") + "-" + end_time.lstrip("0")
 
 
 class Profile(models.Model):

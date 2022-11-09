@@ -44,9 +44,9 @@
                                     <p>This user doesn't have any saved courses</p>
                                 {%else%}
                                     <ul>
-                                        {%for course in profile.saved_courses%}
+                                        {%for section in profile.saved_sections.all%}
 
-                                            <li>{{course}}</li>
+                                            <li>{{section.course}} ({{section.course_section}})</li>
                                         {%endfor%}
                                     </ul>
                                 {%endif%}
