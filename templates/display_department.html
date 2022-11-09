@@ -35,10 +35,9 @@
                                 {%endfor%}
                             </div>
                             <div class="col-1">
-                                <form class="" action="{% url 'unsave_section' %}" method="get">
+                                <form class="" action="{% url 'course_page' course.subject course.catalog_number%}" method="get">
                                     {% csrf_token %}
-                                    <input type="hidden" name="next" value="{{request.path}}"/>
-                                    <button class="btn btn-outline-primary py-0" name="section_to_unsave" type="submit" value={{section.course_number}}>Info</button>
+                                    <button class="btn btn-outline-primary py-0" name="" type="submit">Info</button>
                                 </form>
 
                             </div>

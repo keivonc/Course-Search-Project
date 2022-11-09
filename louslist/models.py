@@ -40,7 +40,7 @@ class Section(models.Model):
     enrollment_available = models.IntegerField()
     topic = models.CharField(max_length=50)
     def __str__(self):
-        return self.subject
+        return str(self.course_number)
 
     def get_meetings(self):
         

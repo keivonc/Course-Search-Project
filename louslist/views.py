@@ -210,7 +210,14 @@ def dept_page(request, dept):
     return render(request, "display_department.html", {"courses": courses, "department": dept, "profile": profile})
 
 @login_required
-def course_page(request):
+def course_page(request, dept, catalog_number):
+
+    course = Course.objects.get(subject=dept, catalog_number=catalog_number)
+    profile = get_object_or_404(Profile, user=request.user)
+
+
+    
+    return render(request, "course_page.html", {"course": course, "profile": profile})
     
     
 
@@ -223,11 +230,10 @@ def save_section(request):
     
     section = Section.objects.get(course_number=course_number)
     
-    department = section.subject
-    
     profile.saved_sections.add(section)
+    next = request.POST.get("next", "/")
 
-    return redirect("dept_page", dept=department)
+    return HttpResponseRedirect(next)
 
 @login_required
 def unsave_section(request):
@@ -244,16 +250,8 @@ def saved_sections(request):
 
     profile = get_object_or_404(Profile, user=request.user)
     sections = profile.saved_sections.all()
-
-    data = {} # TURK 1010 Elematary Turkish 1 : [Section, Section, Section]
-    for section in sections:
-        index = section.subject + " " + section.catalog_number + " " + section.description
-        if index in data:
-            data[index].append(section)
-        else:
-            data[index] = [section]
     
-    return render(request, "display_department.html", {"data": data, "department": "Saved", "profile": profile})
+    return render(request, "saved_courses.html", {"sections": sections, "profile": profile})
 
 
 
