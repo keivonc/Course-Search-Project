@@ -39,6 +39,11 @@ def find_all_by_dept(request, dept):
     return HttpResponse(sections_serialized, content_type = 'application/json')
 
 @login_required
+def loadall(request):
+    get_all_json_files()
+    return HttpResponseRedirect("/")
+
+@login_required
 def find_all_by_dept_v2(request, dept):
     # filename = "JSON/" + dept + ".json"
     # load_json_file(filename)

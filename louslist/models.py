@@ -3,27 +3,30 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from PIL import Image
 from datetime import datetime
-class Instructor(models.Model):
-    name = models.CharField(max_length=50)
-    email = models.EmailField()
-    def __str__(self):
-        return str(self.name)
+# class Instructor(models.Model):
+#     name = models.CharField(max_length=50)
+#     email = models.EmailField()
+#     def __str__(self):
+#         return str(self.name)
 
-# class Course(models.Model):
-#     subject = models.CharField(max_length=4)
-#     catalog_number = models.CharField(max_length=4)
-#     description = models.TextField()
-#     List of sections
-    
-
-class Section(models.Model):
-    instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)
-    course_number = models.IntegerField()
-    semester_code = models.IntegerField()
-    course_section = models.CharField(max_length=5)
+class Course(models.Model):
     subject = models.CharField(max_length=4)
     catalog_number = models.CharField(max_length=4)
     description = models.TextField()
+    
+    
+
+class Section(models.Model):
+    #instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    instructor_name = models.CharField(max_length=50)
+    instructor_email = models.EmailField()
+    course_number = models.IntegerField()
+    semester_code = models.IntegerField()
+    course_section = models.CharField(max_length=5)
+    #subject = models.CharField(max_length=4)
+    #catalog_number = models.CharField(max_length=4)
+    #description = models.TextField()
     units = models.CharField(max_length=20)
     component = models.CharField(max_length=10)
     class_capacity = models.IntegerField()
@@ -54,7 +57,6 @@ class Meeting(models.Model):
         end_time = self.end_time
         return str(self.days) + " " + start_time[:-3] + "-" + end_time
 
-        return "meeting" # str(self.days) + " " + start_time.hour + ":" + start_time.minute + "-" + end_time.hour + ":" + end_time.minute
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -28,6 +28,7 @@ urlpatterns = [
     path('search/users/results', views.SearchUsersResultsView.as_view(), name='search_users_results_view'),
     path('departments/', views.get_departments, name='all_departments'),
     #path('departments/<str:dept>', views.find_all_by_dept_v2, name='dept_page'),
+    path('loadall/', views.loadall, name="loadall")
     path('departments/<str:dept>', views.dept_page, name='dept_page'),
     path('section/save', views.save_section, name='save_section'),
     path('section/unsave', views.unsave_section, name='unsave_section'),
