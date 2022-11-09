@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 from django.db.models import F, Q
 
 from .api_loader import *
-from .models import Section, Meeting, Profile, User, Instructor
+from .models import Section, Meeting, Profile, User
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
 # import os
 
@@ -78,7 +78,7 @@ def find_all_by_dept_v2(request, dept):
 
 @login_required
 def find_all_by_instructor(request, instr):
-    sections = Section.objects.filter(instructor__name__iexact=instr).distinct('description', 'catalog_number')
+    sections = Section.objects.filter(instructor_name__iexact=instr).distinct('description', 'catalog_number')
     sections = sections.order_by('catalog_number')
     if request.POST.get('add_to_saved'):
         profile = get_object_or_404(Profile, user=request.user)
