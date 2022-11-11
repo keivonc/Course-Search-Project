@@ -36,3 +36,4 @@ class FeaturesTests(TestCase):
     # saving a course
     # unsaving a course
     # adding a friend
+    # unadding a friend
