@@ -8,5 +8,5 @@ class GoogleLoginTests(TestCase):
         User.objects.create_user(self.credentials)
     
     def test_login(self):
-        response = self.client.post('/accounts/login/', self.credentials, follow=True)
+        response = self.client.post('/login/', self.credentials, follow=True)
         self.assertTrue(response.status_code == 200)
