@@ -5,4 +5,4 @@ Things to do:
 - Departments page needs an updated UI - add full department name?
 - save button on profile page does not work
 - update password button on change password page does not work
-
+- need to add tests for features

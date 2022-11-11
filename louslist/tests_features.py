@@ -27,7 +27,7 @@ class FeaturesTests(TestCase):
                                facility_description='New Cabell Hall 415')
         self.user1 = User.objects.create_user(username='micah')
     
-    # tests:
+    # tests for features:
     # search for a course
     # search for an instructor
     # updating profile
@@ -35,3 +35,4 @@ class FeaturesTests(TestCase):
     # search for a user
     # saving a course
     # unsaving a course
+    # adding a friend
