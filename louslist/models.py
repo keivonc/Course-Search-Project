@@ -51,12 +51,24 @@ class Meeting(models.Model):
         end_time = self.end_time
         return str(self.days) + " " + start_time[:-2].lstrip("0") + "-" + end_time.lstrip("0")
 
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     major = models.CharField(max_length=50)
     year = models.CharField(max_length=10)
     bio = models.TextField()
-    saved_courses = models.JSONField(default=list, blank=True, null=True)
     saved_sections = models.ManyToManyField(Section, blank=True)
     friends = models.ManyToManyField("self", blank=True)
+
+class Comment(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, related_name="commend_profile_set")
+    commenter = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, related_name="comment_commenter_set")
+    text = models.TextField(default="")
+    
+
+
+
+
+
     

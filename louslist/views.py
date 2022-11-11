@@ -189,9 +189,10 @@ class SearchUsersResultsView(ListView):
         return context
     def get_queryset(self):
         query = self.request.GET.get("q")
+        
         object_list = Profile.objects.filter(
             ((Q(user__username__icontains=query) | Q(user__first_name__icontains=query) | Q(user__last_name__icontains=query)) & Q(user__is_staff=False))
-        )
+        ).exclude(Q(user=self.request.user))
         return object_list
 
 class SearchGeneralResultsView(ListView):
@@ -279,10 +280,10 @@ def friend_profile(request):
     profile.friends.add(new_friend)
     
 
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect("/friends")
 
 @login_required
-def unfriend_user(request):
+def unfriend_profile(request):
     profile = get_object_or_404(Profile, user=request.user)
     username = request.POST.get("username")
     
@@ -291,4 +292,4 @@ def unfriend_user(request):
     profile.friends.remove(new_friend)
     
 
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect("/friends")

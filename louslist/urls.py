@@ -49,7 +49,7 @@ urlpatterns = [
     re_path(r'^oauth/', include('social_django.urls', namespace='social')),
     
     path('profile/save',views.friend_profile, name='friend_user'),
-    path('profile/unsave',views.friend_profile, name='unfriend_user'),
+    path('profile/unsave',views.unfriend_profile, name='unfriend_user'),
     path('friends/',views.FriendsView.as_view(), name='friends_view'),
     
 
