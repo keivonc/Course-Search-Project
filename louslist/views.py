@@ -130,16 +130,13 @@ class RegisterView(View):
     form_class = RegisterForm
     initial = {'key': 'value'}
     template_name = 'register.html'
-
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect(to='/search')
         return super(RegisterView, self).dispatch(request, *args, **kwargs)
-
     def get(self, request, *args, **kwargs):
         form = self.form_class(initial=self.initial)
         return render(request, self.template_name, {'form': form})
-
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -154,7 +151,6 @@ def profile(request):
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)
         profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
-
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -163,12 +159,10 @@ def profile(request):
     else:
         user_form = UpdateUserForm(instance=request.user)
         profile_form = UpdateProfileForm(instance=request.user.profile)
-
     return render(request, 'profile.html', {'user_form': user_form, 'profile_form': profile_form})
 
 class CustomLoginView(LoginView):
     form_class = LoginForm
-
     def form_valid(self, form):
         remember_me = form.cleaned_data.get('remember_me')
         if not remember_me:
@@ -181,7 +175,6 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('users-home')
 
-
 # https://learndjango.com/tutorials/django-search-tutorial
 class SearchUsersHomeView(TemplateView):
     template_name = 'search_users_page.html'
@@ -189,13 +182,11 @@ class SearchUsersHomeView(TemplateView):
 class SearchUsersResultsView(ListView):
     model=Profile
     template_name= 'search_users_results.html'
-
     def get_context_data(self,**kwargs):
         context = super(SearchUsersResultsView,self).get_context_data(**kwargs)
         context['search_query'] = self.request.GET.get("q")
         context['current_user_profile'] = get_object_or_404(Profile, user=self.request.user)
         return context
-
     def get_queryset(self):
         query = self.request.GET.get("q")
         object_list = Profile.objects.filter(
@@ -203,18 +194,15 @@ class SearchUsersResultsView(ListView):
         )
         return object_list
 
-
 class SearchGeneralResultsView(ListView):
     model = Course
     template_name = "search_general_results.html"
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         query = self.request.GET.get("q")
         context["instructors"] = list(Section.objects.filter(Q(instructor_name__icontains=query)).order_by().values_list("instructor_name", flat=True).distinct())
         context["search_query"] = query
         return context
-    
     def get_queryset(self):
         query = self.request.GET.get("q")
         object_list = Course.objects.filter(
@@ -222,45 +210,32 @@ class SearchGeneralResultsView(ListView):
         ).order_by("subject", "catalog_number")
         return object_list
 
-    
-
 @login_required
 def dept_page(request, dept):
     courses = Course.objects.filter(subject=dept)
-    
     profile = get_object_or_404(Profile, user=request.user)
     return render(request, "display_department.html", {"courses": courses, "department": dept, "profile": profile})
 
 @login_required
 def course_page(request, dept, catalog_number):
-
     course = Course.objects.get(subject=dept, catalog_number=catalog_number)
     profile = get_object_or_404(Profile, user=request.user)
-
     return render(request, "course_page.html", {"course": course, "profile": profile})
     
 @login_required
 def section_page(request, dept, catalog_number, course_number):
-
     profile = get_object_or_404(Profile, user=request.user)
     section = Section.objects.get(course_number=course_number)
-    
     return render(request, "section_page.html", {"section": section, "profile": profile})
-
-    
 
 @login_required
 def save_section(request):
     #TODO: Need to validate the saves
-    
     profile = get_object_or_404(Profile, user=request.user)
     course_number = request.POST.get("section_to_save")
-    
     section = Section.objects.get(course_number=course_number)
-    
     profile.saved_sections.add(section)
     next = request.POST.get("next", "/")
-
     return HttpResponseRedirect(next)
 
 @login_required
@@ -269,25 +244,17 @@ def unsave_section(request):
     course_number = request.POST.get("section_to_unsave")
     section = Section.objects.get(course_number=course_number)
     profile.saved_sections.remove(section)
-
     next = request.POST.get("next", "/")
-
     return HttpResponseRedirect(next)
 
 def saved_sections(request):
-
     profile = get_object_or_404(Profile, user=request.user)
     sections = profile.saved_sections.all()
-    
     return render(request, "saved_courses.html", {"sections": sections, "profile": profile})
-
-
 
 class SavedSectionsView(ListView):
     model=Section
     template_name= 'saved_sections.html'
-
-
     def get_queryset(self):
         profile = get_object_or_404(Profile, user=self.request.user)
         return profile.saved_sections.all()

@@ -81,6 +81,27 @@ WSGI_APPLICATION = 'louslist.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+# if 'test' in sys.argv:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#             "USER": "*"
+#         }
+#     }
+# else: 
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#             'NAME': "d86g51mv1m453l",
+#             'USER': "sqgrwrnmchzfmv",
+#             'PASSWORD': "290003c4b66d93740d093412998dd270ce99ca51290a222f4447762f0d2c66e0",
+#             'HOST': "ec2-35-170-146-54.compute-1.amazonaws.com",
+#             'PORT':  "5432"
+#         }
+#     }
+
 if 'test' in sys.argv:
     DATABASES = {
         'default': {
@@ -90,13 +111,13 @@ if 'test' in sys.argv:
         }
     }
 else: 
-    DATABASES = {
+     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': "d86g51mv1m453l",
-            'USER': "sqgrwrnmchzfmv",
-            'PASSWORD': "290003c4b66d93740d093412998dd270ce99ca51290a222f4447762f0d2c66e0",
-            'HOST': "ec2-35-170-146-54.compute-1.amazonaws.com",
+            'NAME': "da2g81gigsis57",
+            'USER': "siprdwdqgzdmix",
+            'PASSWORD': "21d35fd21e9132249521a89c4319a0b3d2f5a2b030bdc56ee34403158f74c4d9",
+            'HOST': "ec2-44-209-57-4.compute-1.amazonaws.com",
             'PORT':  "5432"
         }
     }
