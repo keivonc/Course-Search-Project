@@ -1,7 +1,7 @@
-from django.test import TestCase
-from django.contrib.auth.models import User
-from django.urls import reverse 
-from louslist.models import Section, Meeting
+# from django.test import TestCase
+# from django.contrib.auth.models import User
+# from django.urls import reverse 
+# from louslist.models import Section, Meeting, Instructor
 
 # class SISAPITests(TestCase):
 #     def setUp(self):
@@ -25,6 +25,7 @@ from louslist.models import Section, Meeting
 #         print(Section.objects.all())
 #         response = self.client.get(reverse('dept_page', kwargs={'dept': 'ANTH'}))
 #         self.assertEqual(response.status_code, 200)
+
 # class SISAPITests(TestCase):
 #     # Get this error: raise NotSupportedError(django.db.utils.NotSupportedError: DISTINCT ON fields is not supported by this database backend
 #     # add 'name='dept_page'' to urls.py path
@@ -68,25 +69,25 @@ from louslist.models import Section, Meeting
 #                                     topic="")
 #         self.assertEquals(str(sect), '10309')
 
-    # def test_meeting_model(self):
-    #     inst = Instructor(name='Rachel Apone')
-    #     inst.save()
-    #     sect = Section(instructor=inst, course_number='10309',
-    #                                   semester_code='1228', course_section="001",
-    #                                 subject="ANTH",
-    #                                 catalog_number="1010",
-    #                                 description="Introduction to Anthropology",
-    #                                 units="3",
-    #                                 component="LEC",
-    #                                 class_capacity=25,
-    #                                 wait_list=0,
-    #                                 wait_cap=30,
-    #                                 enrollment_total=23,
-    #                                 enrollment_available=2,
-    #                                 topic="")
-    #     sect.save()
-    #     meet = Meeting.objects.create(section=sect, days="TuTh",
-    #                                 start_time="11.00.00.000000-05:00",
-    #                                 end_time="12.15.00.000000-05:00",
-    #                                 facility_description="Clemons Library 320")
-    #     self.assertEquals(str(meet), sect + "TuTh")
+#     def test_meeting_model(self):
+#         inst = Instructor(name='Rachel Apone')
+#         inst.save()
+#         sect = Section(instructor=inst, course_number='10309',
+#                                       semester_code='1228', course_section="001",
+#                                     subject="ANTH",
+#                                     catalog_number="1010",
+#                                     description="Introduction to Anthropology",
+#                                     units="3",
+#                                     component="LEC",
+#                                     class_capacity=25,
+#                                     wait_list=0,
+#                                     wait_cap=30,
+#                                     enrollment_total=23,
+#                                     enrollment_available=2,
+#                                     topic="")
+#         sect.save()
+#         meet = Meeting.objects.create(section=sect, days="TuTh",
+#                                     start_time="11.00.00.000000-05:00",
+#                                     end_time="12.15.00.000000-05:00",
+#                                     facility_description="Clemons Library 320")
+#         self.assertEquals(str(meet), sect + "TuTh")
