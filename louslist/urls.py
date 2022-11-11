@@ -47,4 +47,11 @@ urlpatterns = [
     path('instructors/<str:instr>', views.find_all_by_instructor, name="instructor_page"),
     path('catalog_number/<str:cn>', views.find_all_by_catalog_number, name="catalog_number_page"),
     re_path(r'^oauth/', include('social_django.urls', namespace='social')),
+    
+    path('profile/save',views.friend_profile, name='friend_user'),
+    path('profile/unsave',views.friend_profile, name='unfriend_user'),
+    path('friends/',views.FriendsView.as_view(), name='friends_view'),
+    
+
+
 ]

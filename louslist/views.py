@@ -193,6 +193,7 @@ class SearchUsersResultsView(ListView):
     def get_context_data(self,**kwargs):
         context = super(SearchUsersResultsView,self).get_context_data(**kwargs)
         context['search_query'] = self.request.GET.get("q")
+        context['current_user_profile'] = get_object_or_404(Profile, user=self.request.user)
         return context
 
     def get_queryset(self):
@@ -292,4 +293,35 @@ class SavedSectionsView(ListView):
         return profile.saved_sections.all()
     
 
+class FriendsView(ListView):
+    model = Profile
+    template_name = 'friendslist.html'  
+
+    def get_queryset(self):
+        profile = get_object_or_404(Profile, user=self.request.user)
+        return profile.friends.all()
+@login_required
+def friend_profile(request):
+    #TODO: Need to validate the saves
     
+    profile = get_object_or_404(Profile, user=request.user)
+    username = request.POST.get("username")
+    
+    new_friend = Profile.objects.get(user__username=username)
+    
+    profile.friends.add(new_friend)
+    
+
+    return HttpResponseRedirect("/")
+
+@login_required
+def unfriend_user(request):
+    profile = get_object_or_404(Profile, user=request.user)
+    username = request.POST.get("username")
+    
+    new_friend = Profile.objects.get(user__username=username)
+    
+    profile.friends.remove(new_friend)
+    
+
+    return HttpResponseRedirect("/")

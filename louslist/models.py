@@ -69,10 +69,9 @@ class Profile(models.Model):
     bio = models.TextField()
     saved_courses = models.JSONField(default=list, blank=True, null=True)
     saved_sections = models.ManyToManyField(Section, blank=True)
-    
+    friends = models.ManyToManyField("self", blank=True)
 
-class Friend(models.Model):
-    friends = models.ManyToManyField(Profile, blank=True)
+
     
     def __str__(self):
         return str(self.user.username) + ", " + str(self.major) + ", " + str(self.year) + ", " + str(self.saved_courses)

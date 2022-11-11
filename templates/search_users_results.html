@@ -9,6 +9,7 @@
 <head>
 <style>
     .searchagain {
+
         padding-bottom: 2em;
         padding-top: 1em;
     }
@@ -19,6 +20,7 @@
 
 <html>
 <div class="container">
+    {{current_user_profile}}
     <div class="searchagain" >
         <h2 > Search Again </h2>
         <form action="{% url 'search_users_results_view' %}" method="get">
@@ -37,6 +39,31 @@
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapse{{forloop.counter}}">
                                 <h5>{{profile.user.first_name}} {{profile.user.last_name}} ({{profile.user.username}})</h5>
                             </button>
+
+                            
+                            
+
+                            {%if friend in current_user_profile.friends.all%}
+                            <form class="" action="{% url 'unfriend_user' %}" method="post">
+                                {% csrf_token %}
+                                
+                                <button class="btn btn-outline-primary py-0" name="username" type="submit"
+                                    value={{profile.user.username}}>Unfriend User</button>
+                            </form>
+                            {% else %}
+
+                            <form class="" action="{% url 'friend_user' %}" method="post">
+                                {% csrf_token %}
+                                
+                                <button class="btn btn-outline-primary py-0" name="username" type="submit" value="{{profile.user.username}}">Friend
+                                    User</button>
+                            </form>
+
+                            {% endif %}
+
+
+
+                            
                         </h2>
                         <div id="collapse{{forloop.counter}}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#{{profile.user.username}}">
                             <div class="accordion-body">
@@ -66,6 +93,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
+
+
+
 
 </html>
 
