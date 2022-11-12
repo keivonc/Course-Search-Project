@@ -21,50 +21,46 @@
     
 
     <div>
-        <h5>Friends</h5>
+        <h1>Friends</h1>
         {%if object_list%}
+            <ul class="list-group">
+                {% for profile in object_list %}
+                    <li class="list-group-item d-flex justify-content-between">
+                        <h4>{{profile}}</h4>
+                        <div class="d-flex gap-3">
+                            <a class="btn btn-outline-info" href="{% url 'profile_detail_view' profile.user.username%}">View profile</a>
 
-        <div class='accordion' id="{{profile.user.username}}">
-            {% for profile in object_list %}
-            <div class='accordion-item'>
-                <h2 class="accordion-header" id="{{ profile.user.username }}">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapse{{forloop.counter}}" aria-expanded="true"
-                        aria-controls="collapse{{forloop.counter}}">
-                        <h5>{{profile.user.first_name}} {{profile.user.last_name}} ({{profile.user.username}})</h5>
+                            <form class="" action="{% url 'unfriend_user' %}" method="post">
+                                {% csrf_token %}
+                                
+                                <button class="btn btn-outline-primary" name="username" type="submit"
+                                    value={{profile.user.username}}>Unfriend User</button>
+                            </form>
                         
-                    </button>
-                    
-                </h2>
-
-                <div id="collapse{{forloop.counter}}" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                    data-bs-parent="#{{profile.user.username}}">
-                    <div class="accordion-body">
+                        </div>
+                    </li>
+                    {% comment %} {%if profile in current_user_profile.friends.all%}
                         <form class="mb-2" action="{% url 'unfriend_user' %}" method="post">
                             {% csrf_token %}
                             
-                            <button class="btn btn-outline-primary py-1" name="username" type="submit"
+                            <button class="btn btn-outline-primary py-0" name="username" type="submit"
                                 value={{profile.user.username}}>Unfriend User</button>
                         </form>
-                        <a href="{% url 'profile_detail_view' profile.user.username%}">View profile</a>
-                        {%if profile.saved_courses == None%}
-                        <p>This user doesn't have any saved courses</p>
-                        {%else%}
-                        <ul>
-                            {%for section in profile.saved_sections.all%}
+                    {% else %}
 
-                            <li>{{section.course}} ({{section.course_section}})</li>
-                            {%endfor%}
-                        </ul>
-                        {%endif%}
-                    </div>
-                </div>
-                {% comment %} {{ profile.user.username }}, {{profile.user.email}}, {{ profile.year }} {% endcomment %}
-            </div>
-            {% endfor %}
-        </div>
+                        <form class="mb-2" action="{% url 'friend_user' %}" method="post">
+                            {% csrf_token %}
+                            
+                            <button class="btn btn-outline-primary py-0" name="username" type="submit" value="{{profile.user.username}}">Friend
+                                User</button>
+                        </form>
+
+                    {% endif %} {% endcomment %}
+                               
+                {% endfor %}
+            </ul>
         {%else%}
-        <p class="text-danger">No results, please try a different search.</p>
+            <p class="text-danger">You haven't friended anyone!</p>
         {% endif%}
 
 
