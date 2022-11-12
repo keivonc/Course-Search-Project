@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from datetime import datetime
 # class Instructor(models.Model):
 #     name = models.CharField(max_length=50)
 #     email = models.EmailField()
@@ -61,10 +61,22 @@ class Profile(models.Model):
     saved_sections = models.ManyToManyField(Section, blank=True)
     friends = models.ManyToManyField("self", blank=True)
 
+    def __str__(self):
+        return self.user.first_name + " " + self.user.last_name + " (" + self.user.username + ")"
+
+    def get_comments(self):
+        return Comment.objects.filter(profile=self).order_by("-comment_date")
+    
+
 class Comment(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, related_name="commend_profile_set")
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, related_name="comment_profile_set")
     commenter = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, related_name="comment_commenter_set")
     text = models.TextField(default="")
+    comment_date = models.DateTimeField(default=datetime.now, blank=True)
+
+    def __str__(self):
+        return str(self.profile) + " " + self.text
+    
     
 
 

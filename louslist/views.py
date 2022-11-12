@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 from django.db.models import F, Q
 
 from .api_loader import *
-from .models import Section, Meeting, Profile, Course
+from .models import Section, Meeting, Profile, Course, Comment
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
 # import os
 
@@ -307,4 +307,17 @@ class ProfileDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["current_user_profile"] = get_object_or_404(Profile, user=self.request.user)
         return context
+
+@login_required
+def make_comment(request):
+
+    commenter = get_object_or_404(Profile, user=request.user)
+    profile_to_comment_to = Profile.objects.get(user__username=request.POST.get("username"))
+    comment = request.POST.get("comment")
+
+    new_comment = Comment(profile=profile_to_comment_to, commenter=commenter, text=comment)
+    new_comment.save()
+    
+    next = request.POST.get("next", "/")
+    return HttpResponseRedirect(next)
     
