@@ -62,7 +62,7 @@ class Profile(models.Model):
     friends = models.ManyToManyField("self", blank=True)
 
 class Comment(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, related_name="commend_profile_set")
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, related_name="comment_profile_set")
     commenter = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, related_name="comment_commenter_set")
     text = models.TextField(default="")
     
