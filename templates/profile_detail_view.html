@@ -1,0 +1,39 @@
+
+{% extends "base.html" %}
+{% block title %}Profile Page{% endblock title %}
+{% block content %}
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <h1>User {{object.user.username}}</h1>
+
+    <ul class="list-group">
+        {%for section in object.saved_sections.all%}
+            <li class="list-group-item"> 
+
+                <div class="row py-1">
+                    <div class="col-1">{{section.course_number}}-{{section.course_section}}</div>
+                    <div class="col-1">{{section.units}} Unit {{section.component}}</div>
+                    <div class="col-1">{{section.enrollment_total}} / {{section.class_capacity}}</div>
+                    <div class="col-2">{{section.instructor_name}}</div>
+                    <div class="col-4">
+                        {% for meeting in section.get_meetings%}
+                            <div >{{meeting}} | {{meeting.facility_description}}</div>
+                        {%endfor%}
+                    </div> 
+                    <div class="col-2 d-flex align-items-center">
+                        <form class="" action="{% url 'section_page' course.subject course.catalog_number section.course_number %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-secondary" type="submit" >Section Info</button>
+                        </form>
+                    </div> 
+
+                </div>
+            </li>
+
+        {%endfor%}
+
+    </ul>
+</div>
+
+
+{% endblock content %}

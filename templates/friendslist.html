@@ -46,6 +46,7 @@
                             <button class="btn btn-outline-primary py-1" name="username" type="submit"
                                 value={{profile.user.username}}>Unfriend User</button>
                         </form>
+                        <a href="{% url 'profile_detail_view' profile.user.username%}">View profile</a>
                         {%if profile.saved_courses == None%}
                         <p>This user doesn't have any saved courses</p>
                         {%else%}

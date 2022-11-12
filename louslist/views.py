@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core import serializers
@@ -268,6 +268,7 @@ class FriendsView(ListView):
     def get_queryset(self):
         profile = get_object_or_404(Profile, user=self.request.user)
         return profile.friends.all()
+
 @login_required
 def friend_profile(request):
     #TODO: Need to validate the saves
@@ -293,3 +294,17 @@ def unfriend_profile(request):
     
 
     return HttpResponseRedirect("/friends")
+
+class ProfileDetailView(DetailView):
+    model = Profile
+    template_name = "profile_detail_view.html"
+
+    def get_object(self, *args, **kwargs):
+        print(self.kwargs)
+        return get_object_or_404(Profile, user__username=self.kwargs.get("username"))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["current_user_profile"] = get_object_or_404(Profile, user=self.request.user)
+        return context
+    
