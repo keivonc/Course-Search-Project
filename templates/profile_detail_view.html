@@ -3,10 +3,26 @@
 {% block title %}Profile Page{% endblock title %}
 {% block content %}
 
+<style>
+    .commentbox{
+        display:inline-block;
+        position:relative;
+        resize: none;
+      }
+      
+      button{
+        position:absolute;
+        bottom:10px;
+        right:10px;
+      }
+      
+      textarea{
+        display:block;
+      }
+</style>
 <div class="container rounded bg-white mt-5 mb-5">
     <h1>{{object.user.first_name}} {{object.user.last_name}} ({{object.user.username}})</h1>
     <br/>
-    <h3 class="text-primary"> Courses</h3>
     <ul class="list-group">
         {%for section in object.saved_sections.all%}
             <li class="list-group-item bg-light"> 
@@ -32,14 +48,34 @@
     </ul>
     <br/>
 
-    <h4>Leave a comment:</h4>
-
-    {%for %}
+    {%if object in user.profile.friends.all%}
+    <form action="{% url 'make_comment' %}" method="post">
+        {% csrf_token %}
+        <div class="commentbox">
+            <input type="hidden" name="next" value="{{request.path}}"/>
+            <input type="hidden" name="username" value="{{object.user.username}}"/>
+            <textarea name="comment" placeholder="Leave a comment..." rows="4%" cols="100%"></textarea>
+            <button class="btn btn-success" type="submit">Comment</button>
+        </div>
+    </form>
+    {%else%}
+        <strong class='text-warning'>You must be a friend of {{object.user.username}} to make a comment.</strong>
+    {%endif%}
+    <br/>
+    {%if object.get_comments|length > 0%}
+    
+    <h4>Comments:</h4>
     <ul class="list-group"> 
+        {%for comment in object.get_comments%}
         <li class="list-group-item"> 
-            Comment
+            <h6>{{comment.commenter}} @ {{comment.comment_date}}</h6>
+            <p class="ms-4">{{comment.text}}</p>
         </li>
+        {%endfor%}
     </ul>
+    {%else%}
+        <h6 class="text-danger">No schedule comments yet!</h6>
+    {%endif%}
 
 </div>
 
