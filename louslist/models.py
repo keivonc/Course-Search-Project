@@ -73,9 +73,17 @@ class Meeting(models.Model):
         other_start = datetime.strptime(m2.start_time, "%I:%M%p")
         other_end = datetime.strptime(m2.end_time, "%I:%M%p")
         #(StartA <= EndB) and (EndA >= StartB) = conflict
-        print("Meetings:", str(m1), str(m2))
-        print("Comparing: ", self_start, self_end, other_start, other_end)
-        return (self_start <= other_end) and (self_end >= other_start)
+        time_conflict = (self_start <= other_end) and (self_end >= other_start)
+
+        m1_days = set([m1.days[i:i+2] for i in range(0, len(m1.days), 2)])
+        m2_days = set([m2.days[i:i+2] for i in range(0, len(m2.days), 2)])
+
+        intersect = m1_days.intersection(m2_days)
+        if len(intersect) > 0 and time_conflict:
+            return True
+        else:
+            return False
+        
 
 
 
