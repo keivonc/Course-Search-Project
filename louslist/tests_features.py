@@ -49,6 +49,13 @@ class FeaturesTests(TestCase):
     #     user.refresh_from_db()
     #     self.assertEqual(user.username, 'keivon')
 
+    # updating password
+    def test_updating_password(self):
+        user = self.user1
+        user.set_password('happy')
+        user.save()
+        self.assertEquals(user.check_password('happy'), True)
+
     # saving a course
     # unsaving a course
     # adding a friend
