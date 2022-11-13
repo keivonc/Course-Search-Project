@@ -85,3 +85,9 @@ class FeaturesTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'friendslist.html')
 
+    # unadding a friend
+    def test_unadd_friend(self):
+        response = self.client.get('/friends/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'friendslist.html')
+
