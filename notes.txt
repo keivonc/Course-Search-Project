@@ -1,7 +1,6 @@
 Things to do:
-- ability to add courses to saved courses without time conflicts and not allowing users to save multiple sections of same course
-- ability to comment on other's saved courses
-- Departments page needs an updated UI - add full department name?
 - save button on profile page does not work
 - update password button on change password page does not work
-- need to add tests for features
+- print message when user adds course that conflicts
+- adding saved courses and comments to profile
+- add tests for features
