@@ -17,14 +17,23 @@
         <ul class="list-group">
             
             {% for course in object_list%}
-                <li class="list-group-item">{{course}}</li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <h5>{{course}}</h5>
+                    <form class="" action="{% url 'course_page' course.subject course.catalog_number%}" method="get">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-info" type="submit">View Course</button>
+                    </form>
+                </li>
             {%endfor%}
         </ul>
         <br/>
         <h3>Instructors</h3>
         <ul class="list-group">
             {% for instructor in instructors %}
-                <li class="list-group-item">{{instructor}}</li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <h5>{{instructor}}</h5>
+                    {%comment%} Potentially add an instructor page{%endcomment%}
+                </li>
             {% endfor%}
         </ul>
         
