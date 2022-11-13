@@ -25,9 +25,10 @@ class FeaturesTests(TestCase):
                                start_time='15.30.00.000000-05:00',
                                end_time='18.00.00.000000-05:00',
                                facility_description='New Cabell Hall 415')
-        self.user1 = User.objects.create_user(username='micah')
+        self.user1 = User.objects.create_user(username='micah', password='test')
     
     # tests for features:
+
     # search for a course
     def test_search(self):
         response = self.client.get('/search/general?q=cs')
@@ -41,8 +42,13 @@ class FeaturesTests(TestCase):
         self.assertTemplateUsed(response, 'search_general_results.html')
 
     # updating profile
-    # updating password
-    # search for a user
+    def test_updating_profile(self):
+        user = self.user1
+        self.client.force_login(user)
+        self.client.post('/profile',{'username': 'keivon'},)
+        user.refresh_from_db()
+        self.assertEqual(user.username, 'keivon')
+
     # saving a course
     # unsaving a course
     # adding a friend
