@@ -1,6 +1,8 @@
-from django.db import models
-from django.contrib.auth.models import User
 from datetime import datetime
+
+from django.contrib.auth.models import User
+from django.db import models
+
 # class Instructor(models.Model):
 #     name = models.CharField(max_length=50)
 #     email = models.EmailField()
@@ -34,9 +36,22 @@ class Section(models.Model):
     enrollment_available = models.IntegerField()
     topic = models.CharField(max_length=50)
     def __str__(self):
-        return str(self.course_number)
+        return str(self.course) + str(self.course_number)
     def get_meetings(self):
         return Meeting.objects.filter(section=self)
+
+    def conflicts(self, other_section):
+        # returns true or false depending on if there's a time conflict
+        this_meetings = self.get_meetings()
+        m2s = other_section.get_meetings()
+
+        for m1 in this_meetings:
+            for m2 in m2s:
+                if Meeting.conflicts(m1, m2):
+                    return True
+
+        return False
+    
 
 class Meeting(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
@@ -50,6 +65,19 @@ class Meeting(models.Model):
         start_time = self.start_time
         end_time = self.end_time
         return str(self.days) + " " + start_time[:-2].lstrip("0") + "-" + end_time.lstrip("0")
+
+    @staticmethod
+    def conflicts(m1, m2):
+        self_start = datetime.strptime(m1.start_time, "%I:%M%p")
+        self_end = datetime.strptime(m2.end_time, "%I:%M%p")
+        other_start = datetime.strptime(m2.start_time, "%I:%M%p")
+        other_end = datetime.strptime(m2.end_time, "%I:%M%p")
+        #(StartA <= EndB) and (EndA >= StartB) = conflict
+        print("Meetings:", str(m1), str(m2))
+        print("Comparing: ", self_start, self_end, other_start, other_end)
+        return (self_start <= other_end) and (self_end >= other_start)
+
+
 
 
 

@@ -73,7 +73,7 @@ class CourseJsonParser:
                 start_hour = start_time[0:2] if int(start_time[0:2]) < 13 else str(int(start_time[0:2])-12)
                 end_hour = end_time[0:2] if int(end_time[0:2]) < 13 else str(int(end_time[0:2])-12)
                 start_time_str = start_hour + ":" + start_time[3:5] + start_ampm
-                end_time_str = end_hour + ":" + end_time[3:5] + end_ampm
+                end_time_str = end_hour + ":" + end_time[3:5] + end_ampm 
                 new_meeting = Meeting(section=section,
                                         days = meeting.get("days"),
                                         start_time = start_time_str,

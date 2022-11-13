@@ -234,9 +234,18 @@ def save_section(request):
     #TODO: Need to validate the saves
     profile = get_object_or_404(Profile, user=request.user)
     course_number = request.POST.get("section_to_save")
-    section = Section.objects.get(course_number=course_number)
-    profile.saved_sections.add(section)
+    section_to_add = Section.objects.get(course_number=course_number)
+    prev_saved_sections = profile.saved_sections.all()
     next = request.POST.get("next", "/")
+
+    for section in prev_saved_sections:
+        print(section_to_add, "---", section)
+        if section_to_add.conflicts(section):
+            print("found a conflict")
+            return HttpResponseRedirect(next)
+    
+            
+    profile.saved_sections.add(section_to_add)
     return HttpResponseRedirect(next)
 
 @login_required
