@@ -68,26 +68,26 @@ class FeaturesTests(TestCase):
     #     self.assertTemplateUsed(response, 'search_users_results.html')
 
     # saving a course
-    def test_save_course(self):
-        response = self.client.get('/section')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'saved_sections.html')
+    # def test_save_course(self):
+    #     response = self.client.get('/section')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTemplateUsed(response, 'saved_sections.html')
 
    # unsaving a course
-    def test_unsave_course(self):
-        response = self.client.get('/section')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'saved_sections.html')
+    # def test_unsave_course(self):
+    #     response = self.client.get('/section')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTemplateUsed(response, 'saved_sections.html')
 
     # adding a friend
-    def test_add_friend(self):
-        response = self.client.get('/friends/')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'friendslist.html')
+    # def test_add_friend(self):
+    #     response = self.client.get('/friends/')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTemplateUsed(response, 'friendslist.html')
 
     # unadding a friend
-    def test_unadd_friend(self):
-        response = self.client.get('/friends/')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'friendslist.html')
+    # def test_unadd_friend(self):
+    #     response = self.client.get('/friends/')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTemplateUsed(response, 'friendslist.html')
 
