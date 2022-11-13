@@ -73,5 +73,9 @@ class FeaturesTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'saved_sections.html')
 
-
+   # unsaving a course
+    def test_unsave_course(self):
+        response = self.client.get('/section')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'saved_sections.html')
 
