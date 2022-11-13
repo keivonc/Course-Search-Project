@@ -1,97 +1,67 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% block title %}Profile Page{% endblock title %}
 {% block content %}
 
-<html>
+<style>
+    .commentbox{
+        display:inline-block;
+        position:relative;
+        resize: none;
+      }
+      
+      button{
+        position:absolute;
+        bottom:10px;
+        right:10px;
+      }
+      
+      textarea{
+        display:block;
+      }
+</style>
+<div class="container rounded bg-white mt-5 mb-5">
+    <h1>Your Courses</h1>
+    <br/>
+    <ul class="list-group">
+        {%for section in user.profile.saved_sections.all%}
+            <li class="list-group-item bg-light"> 
+                <h5>{{section.course}}</h5>
 
-<body style="background-color:navy;">
-    <div class="container">
-        <br>
-        <!-- <h1 class=""> Saved Courses </h1> -->
-        {% if sections%}
-        {%for section in sections%}
-            <ul class="list-group">
-                <li class="list-group-item active" aria-current="true">{{section.course}} </li>
-                <li class="list-group-item py-0"> 
-                    <div class="row py-1">
-                        <div class="col-1">{{section.course_number}}-{{section.course_section}}</div>
-                        <div class="col-1">{{section.units}} Unit {{section.component}}</div>
-                        <div class="col-1">{{section.enrollment_total}} / {{section.class_capacity}}</div>
-                        <div class="col-2">{{section.instructor_name}}</div>
-                        <div class="col-4">
-                            {% for meeting in section.get_meetings%}
-                                <div >{{meeting}} | {{meeting.facility_description}}</div>
-                            {%endfor%}
-                        </div>
-        
-                        <div class="col-1">
-                            <form class="" action="{% url 'unsave_section' %}" method="post">
-                                {% csrf_token %}
-                                <input type="hidden" name="next" value="{{request.path}}"/>
-                                <button class="btn btn-outline-primary py-0" name="section_to_unsave" type="submit" value={{section.course_number}}>Unsave</button>
-                            </form>
-            
-                        </div> 
-        
-                    </div>
+                <div class="row py-1">
+                    <div class="col-1">{{section.course_number}}-{{section.course_section}}</div>
+                    <div class="col-1">{{section.units}} Unit {{section.component}}</div>
+                    <div class="col-1">{{section.enrollment_total}} / {{section.class_capacity}}</div>
+                    <div class="col-2">{{section.instructor_name}}</div>
+                    <div class="col-4">
+                        {% for meeting in section.get_meetings%}
+                            <div >{{meeting}} | {{meeting.facility_description}}</div>
+                        {%endfor%}
+                    </div> 
+                    
 
-                </li>
-                <br/>
-
-            </ul>
+                </div>
+            </li>
 
         {%endfor%}
-        {%else%}
-            <p class="text-danger">No Saved Couses!</p>
 
-        {%endif%}
-        
-    </div>
-</body>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"
-    rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+    </ul>
+    <br/>
+    {%if user.profile.get_comments|length > 0%}
+    
+    <h4>Comments:</h4>
+    <ul class="list-group"> 
+        {%for comment in user.profile.get_comments%}
+        <li class="list-group-item"> 
+            <h6>{{comment.commenter}} @ {{comment.comment_date}}</h6>
+            <p class="ms-4">{{comment.text}}</p>
+        </li>
+        {%endfor%}
+    </ul>
+    {%else%}
+        <h6 class="text-danger">No schedule comments yet!</h6>
+    {%endif%}
 
-</html>
+</div>
+
 
 {% endblock content %}
-
-
-{% comment %} <ul class="list-group">
-    <li class="list-group-item active" aria-current="true"> {{course}}</li>
-    {%for section in course.section_set.all%}
-        <li class="list-group-item py-0">
-            <div class="row py-1">
-                <div class="col-1">{{section.course_number}}-{{section.course_section}}</div>
-                <div class="col-1">{{section.units}} Unit {{section.component}}</div>
-                <div class="col-1">{{section.enrollment_total}} / {{section.class_capacity}}</div>
-                <div class="col-2">{{section.instructor_name}}</div>
-                <div class="col-4">
-                    {% for meeting in section.get_meetings%}
-                        <div >{{meeting}} | {{meeting.facility_description}}</div>
-                    {%endfor%}
-                </div>
-
-                <div class="col-1">
-                    {%if section in profile.saved_sections.all%}
-                        <form class="" action="{% url 'unsave_section' %}" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="next" value="{{request.path}}"/>
-                            <button class="btn btn-outline-primary py-0" name="section_to_unsave" type="submit" value={{section.course_number}}>Unsave</button>
-                        </form>
-                    {% else %}
-                        <form action="{% url 'save_section' %}" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="next" value="{{request.path}}"/>
-                            <button class="btn btn-primary py-0" name="section_to_save" type="submit" value={{section.course_number}}>Save</button>
-                        </form>
-                    {%endif%}
-                </div> 
-
-            </div>
-            
-        </li>
-    {%endfor%}
-</ul> {% endcomment %}
