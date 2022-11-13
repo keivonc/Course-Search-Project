@@ -6,7 +6,7 @@
 {% block content %}
 
 
-<head>
+<head  >
     <style>
         .searchagain {
             padding-bottom: 2em;
@@ -16,12 +16,14 @@
 
 </head>
 
-<html>
+<html >
+    <body style="background-color:navy;">
 <div class="container">
     
 
     <div>
-        <h1>Friends</h1>
+        <br>
+        <!-- <h1>Friends</h1> -->
         {%if object_list%}
             <ul class="list-group">
                 {% for profile in object_list %}
@@ -72,7 +74,7 @@
 
 
 
-
+</body>
 </html>
 
 {% endblock content %}
