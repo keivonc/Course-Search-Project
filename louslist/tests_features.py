@@ -29,7 +29,17 @@ class FeaturesTests(TestCase):
     
     # tests for features:
     # search for a course
+    def test_search(self):
+        response = self.client.get('/search/general?q=cs')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'search_general_results.html')
+
     # search for an instructor
+    def test_search(self):
+        response = self.client.get('/search/general?q=zehtabi')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'search_general_results.html')
+
     # updating profile
     # updating password
     # search for a user
