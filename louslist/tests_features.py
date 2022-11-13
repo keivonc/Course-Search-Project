@@ -1,5 +1,6 @@
 from django.test import TestCase
 from louslist.models import Course, Section, Meeting, User, Profile
+import louslist.views
 
 class FeaturesTests(TestCase):
     def setUp(self):
@@ -25,8 +26,12 @@ class FeaturesTests(TestCase):
                                start_time='15.30.00.000000-05:00',
                                end_time='18.00.00.000000-05:00',
                                facility_description='New Cabell Hall 415')
+        # Profile.objects.create(user=self.user1,
+        #                        year = '3rd',
+        #                        major = 'CS')
         self.user1 = User.objects.create_user(username='micah', password='test')
-    
+
+
     # tests for features:
 
     # search for a course
@@ -56,7 +61,17 @@ class FeaturesTests(TestCase):
         user.save()
         self.assertEquals(user.check_password('happy'), True)
 
+    # search for a user
+    # def test_search_user(self):
+    #     response = self.client.get('/search/users/results?q=emil')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTemplateUsed(response, 'search_users_results.html')
+
     # saving a course
-    # unsaving a course
-    # adding a friend
-    # unadding a friend
+    def test_save_course(self):
+        response = self.client.get('/section')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'saved_sections.html')
+
+
+
