@@ -42,12 +42,12 @@ class FeaturesTests(TestCase):
         self.assertTemplateUsed(response, 'search_general_results.html')
 
     # updating profile
-    def test_updating_profile(self):
-        user = self.user1
-        self.client.force_login(user)
-        self.client.post('/profile',{'username': 'keivon'},)
-        user.refresh_from_db()
-        self.assertEqual(user.username, 'keivon')
+    # def test_updating_profile(self):
+    #     user = self.user1
+    #     self.client.force_login(user)
+    #     self.client.post('/profile',{'username': 'keivon'},)
+    #     user.refresh_from_db()
+    #     self.assertEqual(user.username, 'keivon')
 
     # saving a course
     # unsaving a course
