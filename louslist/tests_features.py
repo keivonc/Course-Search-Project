@@ -36,7 +36,7 @@ class FeaturesTests(TestCase):
 
     # search for an instructor
     def test_search(self):
-        response = self.client.get('/search/general?q=zehtabi')
+        response = self.client.get('/search/general?q=bloomfield')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'search_general_results.html')
 
