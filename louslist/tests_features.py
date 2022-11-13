@@ -79,3 +79,9 @@ class FeaturesTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'saved_sections.html')
 
+    # adding a friend
+    def test_add_friend(self):
+        response = self.client.get('/friends/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'friendslist.html')
+
