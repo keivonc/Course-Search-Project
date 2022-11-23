@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Logout{% endblock title %}
 {% block content %}
-<body style="background-color:orange;">
+<body style="background-color:gray;">
 <br>
 <br>
 <br>
@@ -15,7 +15,7 @@
     <div class="card-body">
         <h5 class="card-title">You Have Been Logged Out</h5>
         <br>
-        <hr><a href="{% url 'login' %}" class="btn btn-primary">Sign in again</a>
+        <hr><a href="{% url 'login' %}" class="btn btn-primary" style="background-color: black; border: black;" >Sign in again</a>
     </div>
 </div>
 </div>

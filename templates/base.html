@@ -15,7 +15,7 @@
         <div class= "navbar-nav mr-auto">
             
                 
-                    <a1  class="navbar-brand" href="/" >New Lou's List</a1>
+                    <a class="navbar-brand" href="/" >New Lou's List</a>
                 
             <!-- <a class="navbar-brand" href="/"  >New Lou's List</a> -->
             
@@ -29,12 +29,12 @@
                 <li class="nav-item"><a class="nav-link active" href="/friends/">Friends</a></li>
                 <li class = "nav-item"><a class = "nav-link active" href="/section/">Saved Courses</a></li>
                 <li class = "nav-item"><a class = "nav-link active" href="/search/users/">Search Users</a></li>
-                <div class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link active" href="{% url 'logout' %}">Sign Out</a></li>
-                    </div>
-            </div>
 
             </ul>
+            <div class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link active" href="{% url 'logout' %}">Sign Out</a></li>
+                </div>
+        </div>
     </nav>
     {% endif %}
     {% block content %}
