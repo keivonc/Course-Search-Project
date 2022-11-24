@@ -1,6 +1,3 @@
 Things to do:
-- save button on profile page does not work
-- update password button on change password page does not work
-- print message when user adds course that conflicts
-- adding saved courses and comments to profile
-- add tests for features
+- finish testing
+- improve stylistic elements
