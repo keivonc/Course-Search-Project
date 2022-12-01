@@ -1,5 +1,4 @@
 Things to do:
-- fix time zone
 - add search button to user search page 
 - need to indicate that users are searching for courses in fall 2022 semester
 - fix course search bar and user search bar so that when nothing is searched, no results show up
