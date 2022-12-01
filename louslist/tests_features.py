@@ -62,10 +62,11 @@ class FeaturesTests(TestCase):
         self.assertEquals(user.check_password('happy'), True)
 
     # search for a user
-    # def test_search_user(self):
-    #     response = self.client.get('/search/users/results?q=emil')
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'search_users_results.html')
+    def test_search_user(self):
+        self.client.force_login(self.user1)
+        response = self.client.get('/search/users/results?q=emil')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'search_users_results.html')
 
     # saving a course
     # def test_save_course(self):
