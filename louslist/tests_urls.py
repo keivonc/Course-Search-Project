@@ -54,9 +54,10 @@ class URLsTests(TestCase):
         response = self.client.get('/profile/')
         self.assertEqual(response.status_code, 200)
 
-    # def test_password_change_url(self):
-    #     response = self.client.get(reverse('password_change'))
-    #     self.assertEqual(response.status_code, 200)
+    def test_password_change_url(self):
+        self.client.force_login(self.user1)
+        response = self.client.get('/password-change/')
+        self.assertEqual(response.status_code, 200)
 
     # def test_saved_courses_url(self):
     #     response = self.client.get(reverse('saved_courses'))
