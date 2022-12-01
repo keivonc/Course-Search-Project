@@ -71,3 +71,9 @@ class URLsTests(TestCase):
     def test_course_page_url(self):
         response = reverse('course_page', kwargs={'dept': 'CS', 'catalog_number': '1110'})
         self.assertEqual(response, '/departments/CS/1110')
+
+    def test_add_friend_url(self):
+        self.client.force_login(self.user1)
+        response = self.client.get('/friends/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'friendslist.html')

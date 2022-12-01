@@ -81,13 +81,15 @@ class FeaturesTests(TestCase):
     #     self.assertTemplateUsed(response, 'saved_sections.html')
 
     # adding a friend
-    # def test_add_friend(self):
-    #     response = self.client.get('/friends/')
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'friendslist.html')
+    def test_add_friend(self):
+        self.client.force_login(self.user1)
+        response = self.client.get('/friends/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'friendslist.html')
 
     # unadding a friend
     # def test_unadd_friend(self):
+    #     self.client.force_login(self.user1)
     #     response = self.client.get('/friends/')
     #     self.assertEqual(response.status_code, 200)
     #     self.assertTemplateUsed(response, 'friendslist.html')
