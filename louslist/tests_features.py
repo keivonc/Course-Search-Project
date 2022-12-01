@@ -26,9 +26,6 @@ class FeaturesTests(TestCase):
                                start_time='15.30.00.000000-05:00',
                                end_time='18.00.00.000000-05:00',
                                facility_description='New Cabell Hall 415')
-        # Profile.objects.create(user=self.user1,
-        #                        year = '3rd',
-        #                        major = 'CS')
         self.user1 = User.objects.create_user(username='micah', password='test')
 
 
