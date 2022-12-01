@@ -66,10 +66,15 @@ class FeaturesTests(TestCase):
         self.assertTemplateUsed(response, 'search_users_results.html')
 
     # saving a course
-    # def test_save_course(self):
-    #     response = self.client.get('/section')
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'saved_sections.html')
+    def test_save_course(self):
+        profile = Profile.objects.get(user=self.user1)
+        profile.year = '3rd'
+        profile.major = 'CS'
+        user = self.user1
+        self.client.force_login(self.user1)
+        self.client.post('/section/save',{'section_to_save': '13512'})
+        self.assertTrue(profile.saved_sections.filter(course_number=13512).exists())
+
 
    # unsaving a course
     # def test_unsave_course(self):
@@ -78,11 +83,8 @@ class FeaturesTests(TestCase):
     #     self.assertTemplateUsed(response, 'saved_sections.html')
 
     # adding a friend
-    def test_add_friend(self):
-        self.client.force_login(self.user1)
-        response = self.client.get('/friends/')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'friendslist.html')
+    # def test_add_friend(self):
+    #     self.client.force_login(self.user1)
 
     # unadding a friend
     # def test_unadd_friend(self):
