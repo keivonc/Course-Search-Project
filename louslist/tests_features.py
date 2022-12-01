@@ -76,11 +76,16 @@ class FeaturesTests(TestCase):
         self.assertTrue(profile.saved_sections.filter(course_number=13512).exists())
 
 
-   # unsaving a course
-    # def test_unsave_course(self):
-    #     response = self.client.get('/section')
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'saved_sections.html')
+    # unsaving a course
+    def test_unsave_course(self):
+        profile = Profile.objects.get(user=self.user1)
+        profile.year = '3rd'
+        profile.major = 'CS'
+        user = self.user1
+        self.client.force_login(self.user1)
+        self.client.post('/section/save',{'section_to_save': '13512'})
+        self.client.post('/section/unsave',{'section_to_unsave': '13512'})
+        self.assertFalse(profile.saved_sections.filter(course_number=13512).exists())
 
     # adding a friend
     # def test_add_friend(self):
