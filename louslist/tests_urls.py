@@ -27,10 +27,11 @@ class URLsTests(TestCase):
                                start_time='15.30.00.000000-05:00',
                                end_time='18.00.00.000000-05:00',
                                facility_description='New Cabell Hall 415')
-        self.user1 = User.objects.create_user(username='micah')
-        credentials = {"username": "test_username", "password": "test_password"}
-        self.credentials = credentials
-        User.objects.create_user(self.credentials)
+        self.user1 = User.objects.create_user(username='micah', password='test')
+        # self.user1 = User.objects.create_user(username='micah')
+        # credentials = {"username": "test_username", "password": "test_password"}
+        # self.credentials = credentials
+        # User.objects.create_user(self.credentials)
 
     def test_home_url(self):
         response = self.client.get(reverse('home'))
@@ -48,17 +49,20 @@ class URLsTests(TestCase):
         response = self.client.get(reverse('users-register'))
         self.assertEqual(response.status_code, 200)
 
-    # def test_users_profile_url(self):
-    #     response = self.client.get(reverse('users-profile'))
-    #     self.assertEqual(response.status_code, 200)
+    def test_users_profile_url(self):
+        self.client.force_login(self.user1)
+        response = self.client.get('/profile/')
+        self.assertEqual(response.status_code, 200)
 
-    # def test_password_change_url(self):
-    #     response = self.client.get(reverse('password_change'))
-    #     self.assertEqual(response.status_code, 200)
+    def test_password_change_url(self):
+        self.client.force_login(self.user1)
+        response = self.client.get('/password-change/')
+        self.assertEqual(response.status_code, 200)
 
-    # def test_saved_courses_url(self):
-    #     response = self.client.get(reverse('saved_courses'))
-    #     self.assertEqual(response.status_code, 200)
+    def test_saved_courses_url(self):
+        self.client.force_login(self.user1)
+        response = self.client.get('/section/')
+        self.assertEqual(response.status_code, 200)
 
     def test_logout_url(self):
         response = self.client.get(reverse('logout'))
@@ -71,3 +75,9 @@ class URLsTests(TestCase):
     def test_course_page_url(self):
         response = reverse('course_page', kwargs={'dept': 'CS', 'catalog_number': '1110'})
         self.assertEqual(response, '/departments/CS/1110')
+
+    def test_add_friend_url(self):
+        self.client.force_login(self.user1)
+        response = self.client.get('/friends/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'friendslist.html')
