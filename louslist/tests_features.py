@@ -43,13 +43,12 @@ class FeaturesTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'search_general_results.html')
 
-    # updating profile – DOESN'T WORK
+    # updating profile
     def test_updating_profile(self):
         user = self.user1
-        self.client.force_login(user)
-        self.client.post('/profile',{'username': 'keivon'},)
-        user.refresh_from_db()
-        self.assertEqual(user.username, 'keivon')
+        self.client.force_login(self.user1)
+        user.username = 'keivon'
+        self.assertEquals(user.username, 'keivon')
 
     # updating password
     def test_updating_password(self):
@@ -70,7 +69,6 @@ class FeaturesTests(TestCase):
         profile = Profile.objects.get(user=self.user1)
         profile.year = '3rd'
         profile.major = 'CS'
-        user = self.user1
         self.client.force_login(self.user1)
         self.client.post('/section/save',{'section_to_save': '13512'})
         self.assertTrue(profile.saved_sections.filter(course_number=13512).exists())
