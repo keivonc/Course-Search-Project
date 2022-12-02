@@ -73,7 +73,6 @@ class FeaturesTests(TestCase):
         user = self.user1
         self.client.force_login(self.user1)
         self.client.post('/section/save',{'section_to_save': '13512'})
-        print(profile.saved_sections.all())
         self.assertTrue(profile.saved_sections.filter(course_number=13512).exists())
 
 
@@ -95,13 +94,16 @@ class FeaturesTests(TestCase):
         user2 = User.objects.create_user(username='eei9wnp', password='test')
         self.client.force_login(self.user1)
         self.client.post('/profile/save',{'username': 'eei9wnp'})
-        print(profile.friends.all())
         self.assertTrue(profile.friends.filter(user__username='eei9wnp').exists())
 
     # unadding a friend
-    # def test_unadd_friend(self):
-    #     self.client.force_login(self.user1)
-    #     response = self.client.get('/friends/')
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'friendslist.html')
+    def test_unadd_friend(self):
+        profile = Profile.objects.get(user = self.user1)
+        profile.year = '3rd'
+        profile.major = 'CS'
+        user2 = User.objects.create_user(username='eei9wnp', password='test')
+        self.client.force_login(self.user1)
+        self.client.post('/profile/save',{'username': 'eei9wnp'})
+        self.client.post('/profile/unsave',{'username': 'eei9wnp'})
+        self.assertFalse(profile.friends.filter(user__username='eei9wnp').exists())
 
