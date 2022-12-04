@@ -28,10 +28,6 @@ class URLsTests(TestCase):
                                end_time='18.00.00.000000-05:00',
                                facility_description='New Cabell Hall 415')
         self.user1 = User.objects.create_user(username='micah', password='test')
-        # self.user1 = User.objects.create_user(username='micah')
-        # credentials = {"username": "test_username", "password": "test_password"}
-        # self.credentials = credentials
-        # User.objects.create_user(self.credentials)
 
     def test_home_url(self):
         response = self.client.get(reverse('home'))

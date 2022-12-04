@@ -28,9 +28,6 @@ class FeaturesTests(TestCase):
                                facility_description='New Cabell Hall 415')
         self.user1 = User.objects.create_user(username='micah', password='test')
 
-
-    # tests for features:
-
     # search for a course
     def test_search(self):
         response = self.client.get('/search/general?q=cs')
@@ -73,7 +70,6 @@ class FeaturesTests(TestCase):
         self.client.post('/section/save',{'section_to_save': '13512'})
         self.assertTrue(profile.saved_sections.filter(course_number=13512).exists())
 
-
     # unsaving a course
     def test_unsave_course(self):
         profile = Profile.objects.get(user = self.user1)
@@ -104,4 +100,3 @@ class FeaturesTests(TestCase):
         self.client.post('/profile/save',{'username': 'eei9wnp'})
         self.client.post('/profile/unsave',{'username': 'eei9wnp'})
         self.assertFalse(profile.friends.filter(user__username='eei9wnp').exists())
-
