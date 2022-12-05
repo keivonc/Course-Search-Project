@@ -13,6 +13,14 @@
         padding-bottom: 2em;
         padding-top: 1em;
     }
+
+    body {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/University_of_Virginia_seal.svg/800px-University_of_Virginia_seal.svg.png');
+            background-size: cover;
+            background-attachment: fixed;
+            background-size: 15% 25%;
+            background-color: orange;
+        }
     
 </style>
     
@@ -21,14 +29,14 @@
 <html >
 <div class="container">
     <div class="searchagain" >
-        <h2 > Search Again </h2>
+        <h2 style="max-width:fit-content ;background-color:white"> Search Again </h2>
         <form action="{% url 'search_users_results_view' %}" method="get">
             <input name="q" type="text" placeholder="Search..."/>
         </form>
     </div>
     
     <div >
-        <h5>Search Results for "{{search_query}}":</h5>
+        <h5 style="max-width:fit-content ;background-color:white">Search Results for "{{search_query}}":</h5>
         {%if object_list%}
             <ul class="list-group">
                 {% for profile in object_list %}
