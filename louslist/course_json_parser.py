@@ -2,22 +2,9 @@ from .models import *
 
 
 class CourseJsonParser:
-
-
     def __init__(self, json_object) -> None:
         self.json_object = json_object
 
-    
-    # def get_instructor(self):
-
-    #     instructor_obj = self.json_object.get("instructor", {})
-    #     name = instructor_obj.get("name")
-    #     email = instructor_obj.get("email")
-    #     if not Instructor.objects.filter(email=email).exists():
-    #         Instructor.objects.create(name=name, email=email)
-    #     return Instructor.objects.get(email=email)
-
-    
     def get_course(self):
         subject = self.json_object.get("subject")
         catalog_number=self.json_object.get("catalog_number")
@@ -27,8 +14,6 @@ class CourseJsonParser:
             print("Created course", subject, catalog_number, description)
         return Course.objects.get(subject=subject, catalog_number=catalog_number, description=description)
 
-
-    
     def get_section(self):
         
         course = self.get_course()
@@ -56,12 +41,12 @@ class CourseJsonParser:
 
     def get_meetings(self):
         section = self.get_section()
-        # if not Section.objects.filter(course_number = section.course_number).exists():
-        #     raise RuntimeError("Section doesn't exist and hasn't been created")
         
         if Meeting.objects.filter(section=section).exists():
             return Meeting.objects.filter(section=section)
+
         meetings = []
+
         for meeting in self.json_object.get("meetings", []):
             start_time = meeting.get("start_time")
             end_time = meeting.get("end_time")
@@ -85,16 +70,7 @@ class CourseJsonParser:
             meeting.save()
 
         return meetings
-
     
     def load_all(self):
         self.get_meetings()
         # load the sections into course model
-
-
-
-        
-
-
-
-    

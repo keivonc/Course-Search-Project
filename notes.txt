@@ -1,3 +1,0 @@
-Things to do:
-- finish testing
-- improve stylistic elements

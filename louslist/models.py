@@ -9,12 +9,14 @@ from django.db import models
 #     def __str__(self):
 #         return str(self.name)
 
+
 class Course(models.Model):
     subject = models.CharField(max_length=4)
     catalog_number = models.CharField(max_length=4, default="")
     description = models.TextField(default="")
     def __str__(self):
         return self.subject + " " + self.catalog_number + " " + self.description
+
 
 class Section(models.Model):
     #instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)
@@ -85,10 +87,6 @@ class Meeting(models.Model):
             return False
         
 
-
-
-
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     major = models.CharField(max_length=50)
@@ -112,11 +110,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return str(self.profile) + " " + self.text
-    
-    
-
-
-
-
-
     

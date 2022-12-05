@@ -55,7 +55,3 @@ class ModelsTests(TestCase):
 
     def tearDown(self):
         self.user1.delete()
-
-
-    
-

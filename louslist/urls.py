@@ -53,7 +53,4 @@ urlpatterns = [
     path('profile/<str:username>', views.ProfileDetailView.as_view(), name="profile_detail_view"),
     path('comment/', views.make_comment, name="make_comment"),
     path('friends/',views.FriendsView.as_view(), name='friends_view'),
-    
-
-
 ]
