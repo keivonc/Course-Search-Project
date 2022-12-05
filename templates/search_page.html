@@ -4,10 +4,12 @@
 
 
 <html>
-    
     <div class=" outer-div d-flex justify-content-center align-items-center">
             <!-- <p> <strong> Search for a course or instructor: </strong> </p> -->
         <form class="" action="{% url 'search_general_results' %}" method="get">
+            <p>Department input : APMA , ECON , CS , etc </p>
+            <p>Course Number input : 1XXX , 2XXX , 3XXX , etc </p>
+            <p>Instructor input: First Name Last Name </p>
             <input  name="q" type="text" placeholder="Search by Department, Course Number, or Instructor"  style="height:50px; width:600px"/>
                 <button class="button-9" type="submit" style="height:52px; width:100px">Search</button>
             
@@ -17,9 +19,15 @@
         
     </div>
 <style>
-
+p {
+  color:black;
+  text-indent: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: white;
+}
     .outer-div {
-        height: 80vh;
+        height: 40vh;
         width: 100vw;
     }
         .search4 {
