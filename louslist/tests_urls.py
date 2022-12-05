@@ -72,6 +72,10 @@ class URLsTests(TestCase):
         response = reverse('course_page', kwargs={'dept': 'CS', 'catalog_number': '1110'})
         self.assertEqual(response, '/departments/CS/1110')
 
+    def test_view_friend_url(self):
+        response = reverse('profile_detail_view', kwargs={'username': 'keivon'})
+        self.assertEqual(response, '/profile/keivon')
+
     def test_add_friend_url(self):
         self.client.force_login(self.user1)
         response = self.client.get('/friends/')
