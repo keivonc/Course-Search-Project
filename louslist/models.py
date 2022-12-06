@@ -71,7 +71,7 @@ class Meeting(models.Model):
     @staticmethod
     def conflicts(m1, m2):
         self_start = datetime.strptime(m1.start_time, "%I:%M%p")
-        self_end = datetime.strptime(m1.end_time, "%I:%M%p")
+        self_end = datetime.strptime(m2.end_time, "%I:%M%p")
         other_start = datetime.strptime(m2.start_time, "%I:%M%p")
         other_end = datetime.strptime(m2.end_time, "%I:%M%p")
         #(StartA <= EndB) and (EndA >= StartB) = conflict
