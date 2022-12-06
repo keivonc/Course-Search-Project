@@ -15,7 +15,7 @@
         <br/>
         <h3>Courses</h3>
         <ul class="list-group">
-            
+            {% if object_list %}
             {% for course in object_list%}
                 <li class="list-group-item d-flex justify-content-between">
                     <h5>{{course}}</h5>
@@ -25,16 +25,23 @@
                     </form>
                 </li>
             {%endfor%}
+            {%else%}
+            No Courses Results
+            {%endif%}
         </ul>
         <br/>
         <h3>Instructors</h3>
         <ul class="list-group">
+            {% if instructors %}
             {% for instructor in instructors %}
                 <li class="list-group-item d-flex justify-content-between">
                     <h5>{{instructor}}</h5>
                     {%comment%} Potentially add an instructor page{%endcomment%}
                 </li>
             {% endfor%}
+            {%else%}
+            No Instructors Results
+            {%endif%}
         </ul>
         
     </div>

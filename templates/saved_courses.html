@@ -2,7 +2,7 @@
 {% block title %}Profile Page{% endblock title %}
 {% block content %}
 
-<body style="background-color:orange;">
+<body style="background-color:black;">
 <style>
     .commentbox{
         display:inline-block;
@@ -19,12 +19,12 @@
       textarea{
         display:block;
       }
-      body {
+      /* body {
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/University_of_Virginia_seal.svg/800px-University_of_Virginia_seal.svg.png');
             background-size: cover;
             background-attachment: fixed;
             background-size: 15% 25%;
-        }
+        } */
 </style>
 <div class="container rounded bg-white mt-5 mb-5">
     <h1>Your Courses</h1>
@@ -40,12 +40,21 @@
                     <div class="col-1">{{section.enrollment_total}} / {{section.class_capacity}}</div>
                     <div class="col-2">{{section.instructor_name}}</div>
                     <div class="col-4">
+                        
                         {% for meeting in section.get_meetings%}
                             <div >{{meeting}} | {{meeting.facility_description}}</div>
                         {%endfor%}
                     </div> 
-                    
 
+
+                    <div class="col-2">
+                    <form class="" action="{% url 'unsave_section' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{request.path}}" />
+                        <button class="btn btn-outline-primary" name="section_to_unsave" type="submit"
+                            value={{section.course_number}}>Unsave</button>
+                    </form>
+                    </div>
                 </div>
             </li>
 

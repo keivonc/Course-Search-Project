@@ -12,17 +12,17 @@
             padding-bottom: 2em;
             padding-top: 1em;
         }
-        body {
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/University_of_Virginia_seal.svg/800px-University_of_Virginia_seal.svg.png');
+        /* body {
+            background-image: url("https://cdn.wallpapersafari.com/83/35/x16Cwg.jpg");
             background-size: cover;
             background-attachment: fixed;
-            background-size: 15% 25%;
-        }
+            background-size: 100% 100%;
+        } */
 
         .friend{
             font-weight: bold;
-            font: 100;
-            font-style: italic;
+            font: 80;
+            /* font-style: italic; */
             text-align: center;
             max-width: fit-content;
             background-color: white;
@@ -33,13 +33,13 @@
 </head>
 
 <html >
-    <body style="background-color:orange;">
+    <body style="background-color:black">
 <div class="container">
 
     <div>
         <br>
         <center></center>
-         <h1 class="friend">Friends</h1> 
+        
         {%if object_list%}
             <ul class="list-group">
                 {% for profile in object_list %}
