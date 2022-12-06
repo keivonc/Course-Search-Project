@@ -51,7 +51,7 @@
                             <form class="" action="{% url 'unfriend_user' %}" method="post">
                                 {% csrf_token %}
                                 
-                                <button type="button" class="btn btn-primary" name="username" style="background-color:red ;"
+                                <button type="button" class="btn btn-primary" name="username" type="submit" style="background-color:red ;"
                                     value={{profile.user.username}}>Unfriend <span class= "bi bi-trash"></span></button>
                             </form>
                         
