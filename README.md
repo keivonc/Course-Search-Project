@@ -1,1 +1,1 @@
-## This is the code for a group project I worked on over the course of the Fall 2022 semester in my Advanced Software Development class (CS3240). To access the website, go to https://project-a-29-louslist.herokuapp.com/. Thank you!
+This is the code for a group project I worked on over the course of the Fall 2022 semester in my Advanced Software Development class (CS3240). To access the website, go to https://project-a-29-louslist.herokuapp.com/. Thank you!
